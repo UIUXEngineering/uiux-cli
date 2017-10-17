@@ -4,6 +4,6 @@
 // Provide a title to the process in `ps`
 process.title = '@uiux/cli';
 
-require('../dist/bootstrap');
+require('../gulpfile');
 
 

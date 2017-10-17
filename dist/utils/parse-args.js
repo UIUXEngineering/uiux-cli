@@ -1,33 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function getProcessArgsObject() {
-    var argList = process.argv;
-    var arg = {};
-    var a = 0;
-    var opt = null;
-    var thisOpt = null;
-    var curOpt = null;
-    for (a; a < argList.length; a++) {
-        thisOpt = argList[a].trim();
-        opt = thisOpt.replace(/^\-+/, '');
-        if (opt === thisOpt) {
-            // argument value
-            if (curOpt) {
-                arg[curOpt] = opt;
-            }
-            curOpt = null;
-        }
-        else {
-            // argument name
-            curOpt = opt;
-            arg[curOpt] = true;
-        }
-    }
-    return arg;
+var chalk_1 = require("chalk");
+var args = {
+    g: false,
+    template: null,
+    path: null,
+};
+function getArgs() {
+    return args;
 }
-exports.getProcessArgsObject = getProcessArgsObject;
+exports.getArgs = getArgs;
 function getArgsArray() {
     var argList = process.argv;
-    return argList;
+    if (argList) {
+        if (argList.indexOf('--version') !== -1) {
+            var pkg = require('../../package.json');
+            console.log(pkg.version);
+        }
+        else if (argList.indexOf('g') === -1) {
+            console.log("" + chalk_1.red('No Params Provided'));
+        }
+        else {
+            parseArgs(argList);
+        }
+    }
 }
 exports.getArgsArray = getArgsArray;
+function parseArgs(argList) {
+    var opts = argList.slice(argList.indexOf('g'));
+    args.g = true;
+    args.template = opts[1].toUpperCase();
+    args.path = opts[2].toUpperCase();
+}

@@ -1,6 +1,6 @@
 {
-  "name": "@uiux/ui-cli",
-  "version": "0.0.1-beta.09",
+  "name": "@uiux/cli",
+  "version": "0.0.1-beta.10",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {

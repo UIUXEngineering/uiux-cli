@@ -16,9 +16,6 @@
       "node"
     ],
     "baseUrl": ".",
-    "paths": {
-      "cli-task-tools": ["./lib/index"]
-    }
   },
 
   "exclude": [
