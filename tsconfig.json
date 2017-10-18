@@ -15,10 +15,11 @@
     "types": [
       "node"
     ],
-    "baseUrl": ".",
+    "baseUrl": "."
   },
 
   "exclude": [
-    "node_modules/"
+    "node_modules/",
+    "templates/"
   ]
 }

@@ -13,18 +13,18 @@
     "build": "node_modules/.bin/tsc --watch"
   },
   "dependencies": {
-    "@types/chalk": "^0.4.31",
-    "@types/gulp": "^4.0.4",
-    "@types/node": "^8.0.41",
     "chalk": "^2.1.0",
+    "ember-cli-string-utils": "^1.1.0",
     "gulp": "^3.9.1",
-    "ts-node": "^3.3.0",
-    "tsconfig-paths": "^2.3.0",
-    "tslib": "^1.8.0",
-    "tsutils": "^2.12.1",
-    "typescript": "^2.5.3"
+    "gulp-template": "^4.0.0"
   },
   "devDependencies": {
-    "tslint": "^5.7.0"
+    "@types/chalk": "^0.4.31",
+    "@types/gulp": "^4.0.4",
+    "@types/node": "^8.0.44",
+    "tslib": "^1.8.0",
+    "tslint": "^5.7.0",
+    "tsutils": "^2.12.1",
+    "typescript": "^2.5.3"
   }
 }
