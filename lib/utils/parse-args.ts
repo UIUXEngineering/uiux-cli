@@ -19,6 +19,7 @@ export interface IArgs {
     dashCaseBasename?: string;
     componentFilename?: string;
     moduleFilename?: string;
+    themeFilename?: string;
   };
   gulp: IGulpParams;
 }
@@ -28,10 +29,12 @@ export interface IGulpParams {
   srcTemplate: string;
   srcPlatform: string;
   srcModule: string;
+  srcTheme: string;
   cwd: string;
   dest: string;
   renameComponent: IGulpRename;
   renameModule: IGulpRename;
+  renameTheme: IGulpRename;
 }
 
 export interface IGulpRename {
@@ -55,12 +58,16 @@ let args: IArgs = {
     srcTemplate: '',
     srcPlatform: '',
     srcModule: '',
+    srcTheme: '',
     cwd: '',
     dest: '',
     renameComponent: {
       basename: '',
     },
     renameModule: {
+      basename: '',
+    },
+    renameTheme: {
       basename: '',
     },
   },
@@ -128,6 +135,9 @@ function parseTemplateParams(argList: string[]): void {
 
     args.templateVars.moduleFilename =
       args.gulp.renameModule.basename + args.gulp.renameModule.suffix;
+
+    args.templateVars.themeFilename =
+      args.gulp.renameTheme.basename + args.gulp.renameTheme.suffix;
   }
 }
 
@@ -137,6 +147,7 @@ function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
     srcTemplate: '',
     srcPlatform: '',
     srcModule: '',
+    srcTheme: '',
     cwd: '',
     dest: '',
     renameComponent: {
@@ -145,17 +156,22 @@ function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
     renameModule: {
       basename: '',
     },
+    renameTheme: {
+      basename: '',
+    },
   };
 
   // Base File Name
   gulpParams.renameComponent.basename = stringUtils.dasherize(opts[ 2 ]);
   gulpParams.renameModule.basename = stringUtils.dasherize(opts[ 2 ]);
+  gulpParams.renameTheme.basename = '_' + stringUtils.dasherize(opts[ 2 ]);
   if ( _args.template === templateTypes.MATERIAL.toString() ) {
 
     // concat instead of using gulp-template
     // 'suffix'
     gulpParams.renameComponent.suffix = '.component';
     gulpParams.renameModule.suffix = '.module';
+    gulpParams.renameTheme.suffix = '.theme';
   }
 
   // GULP SRC
@@ -223,6 +239,7 @@ function gulpSrc(_templateType: string): any {
         srcTemplate: templatePaths.MATERIAL,
         srcPlatform: templatePaths.MATERIAL_PLATFORM,
         srcModule: templatePaths.MATERIAL_PLATFORM_MODULE,
+        srcTheme: templatePaths.MATERIAL_PLATFORM_THEME,
       };
 
     // ui platform
@@ -230,7 +247,8 @@ function gulpSrc(_templateType: string): any {
       return {
         srcTemplate: templatePaths.CDK,
         srcPlatform: templatePaths.CDK_PLATFORM,
-        srcModule: templatePaths.CDK_PLATFORM_MODULE
+        srcModule: templatePaths.CDK_PLATFORM_MODULE,
+        srcTheme: null,
       };
 
     // ui platform
@@ -239,6 +257,7 @@ function gulpSrc(_templateType: string): any {
         srcTemplate: templatePaths.COMPONENT,
         srcPlatform: null,
         srcModule: null,
+        srcTheme: null,
       };
 
     default:

@@ -17,6 +17,7 @@ export enum templatePaths {
   CDK_PLATFORM_MODULE = 'templates/ui/material/module/**/*',
   MATERIAL = 'templates/ui/material/base/**/*',
   MATERIAL_PLATFORM = 'templates/ui/material/platform/**/*',
+  MATERIAL_PLATFORM_THEME = 'templates/ui/material/componentTheme/**/*',
   MATERIAL_PLATFORM_MODULE = 'templates/ui/material/module/**/*'
 }
 
