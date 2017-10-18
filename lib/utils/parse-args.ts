@@ -4,6 +4,14 @@ import { templateTypes, templatePaths, gulpTasks } from '../ui-tasks/enums';
 
 const stringUtils = require('ember-cli-string-utils');
 
+export interface IProcessState {
+  canProcess: boolean;
+}
+
+let processState = {
+  canProcess: false,
+};
+
 export interface IArgs {
   template: string;
   templateVars: {
@@ -63,7 +71,7 @@ export function getArgs(): IArgs {
   return args;
 }
 
-export function parseArgs(): void {
+export function parseArgs(): IProcessState {
   let argList: string[] = process.argv;
 
   if ( argList ) {
@@ -71,11 +79,14 @@ export function parseArgs(): void {
       let pkg: any = require('../../package.json');
       console.log(pkg.version);
     } else if ( argList.indexOf('g') !== -1 || argList.indexOf('generate') !== -1 ) {
+      processState.canProcess = true;
       parseTemplateParams(argList);
     } else {
       console.error(`${bold(red('No Params Provided'))}`);
     }
   }
+
+  return processState;
 }
 
 function parseTemplateParams(argList: string[]): void {
