@@ -9,7 +9,6 @@ const gulpRename = require('gulp-rename');
 
 task(':ui-template', function () {
   const args: IArgs = getArgs();
-  console.log(args);
 
   return src(args.gulp.srcTemplate)
     .pipe(data(() => (args.templateVars)))
@@ -21,7 +20,6 @@ task(':ui-template', function () {
 
 task(':ui-platform', function (done) {
   const args: IArgs = getArgs();
-  console.log(args);
 
   if (args.gulp.srcPlatform) {
     return src(args.gulp.srcPlatform)
@@ -39,7 +37,6 @@ task(':ui-platform', function (done) {
 
 task(':ui-platform-module', function (done) {
   const args: IArgs = getArgs();
-  console.log(args);
 
   if (args.gulp.srcModule) {
     return src(args.gulp.srcModule)
