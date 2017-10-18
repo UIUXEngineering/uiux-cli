@@ -1,18 +1,58 @@
-import { task } from 'gulp';
-import { generateUI } from './enums';
-import { yellow } from 'chalk';
+import { task, src, dest } from 'gulp';
+import { gulpTasks } from './enums';
 import { getArgs, IArgs } from '../utils/parse-args';
+import { sequenceTask } from '../utils/sequence-task';
 
-task(generateUI.COMPONENT, function () {
+const data = require('gulp-data');
+const gulpTemplate = require('gulp-template');
+const gulpRename = require('gulp-rename');
+
+task(':ui-template', function () {
   const args: IArgs = getArgs();
   console.log(args);
+
+  return src(args.gulp.srcTemplate)
+    .pipe(data(() => (args.templateVars)))
+    .pipe(gulpTemplate())
+    .pipe(gulpRename(args.gulp.renameComponent))
+    .pipe(dest(args.gulp.dest));
 });
 
-task(generateUI.CDK, function () {
-  console.log('CDK');
-  console.log(getArgs());
-  console.log();
-  console.log('Please specify a gulp task you want to run.');
-  console.log(`You're probably looking for ${yellow('test')} or ${yellow('serve:devapp')}.`);
-  console.log();
+
+task(':ui-platform', function (done) {
+  const args: IArgs = getArgs();
+  console.log(args);
+
+  if (args.gulp.srcPlatform) {
+    return src(args.gulp.srcPlatform)
+      .pipe(data(() => (args.templateVars)))
+
+      // platform templates use filenames
+      .pipe(gulpTemplate())
+      .pipe(dest(args.gulp.dest));
+  } else {
+    done();
+  }
+
 });
+
+
+task(':ui-platform-module', function (done) {
+  const args: IArgs = getArgs();
+  console.log(args);
+
+  if (args.gulp.srcModule) {
+    return src(args.gulp.srcModule)
+      .pipe(data(() => (args.templateVars)))
+      .pipe(gulpTemplate())
+      .pipe(gulpRename(args.gulp.renameModule))
+      .pipe(dest(args.gulp.dest));
+  } else {
+    done();
+  }
+
+});
+
+// *.toString() is to just make typescript compiler happy.
+task(gulpTasks.GENERATE.toString(), sequenceTask(':ui-template',
+  ':ui-platform', ':ui-platform-module'));

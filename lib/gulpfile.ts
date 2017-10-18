@@ -1,23 +1,22 @@
-import {getArgsArray, IArgs} from './utils/parse-args';
-import {generateUI} from './ui-tasks/enums';
+/**
+ * This file is only for scaffolding to place
+ * conditions if you do not want to directly
+ * run a gulp task. For example, if you want
+ * to run node or bash files directly.
+ */
+import { getArgsArray, IArgs } from './utils/parse-args';
 import './ui-tasks/generate';
-let gulp = require('gulp');
 
+let gulp = require('gulp');
 
 const args: IArgs = getArgsArray();
 
-if (args.g) {
-  switch (args.template) {
+/**
+ * Change process working directory to root directory of cli.
+ */
+process.chdir(args.gulp.cwd);
 
-    case generateUI.COMPONENT:
-      gulp.start(generateUI.COMPONENT);
-      break;
-
-    case generateUI.CDK:
-      gulp.start(generateUI.CDK);
-      break;
-  }
-}
+gulp.start(args.gulp.task);
 
 
 
