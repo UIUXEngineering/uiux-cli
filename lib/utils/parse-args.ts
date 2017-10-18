@@ -63,7 +63,7 @@ export function getArgs(): IArgs {
   return args;
 }
 
-export function getArgsArray(): IArgs {
+export function parseArgs(): void {
   let argList: string[] = process.argv;
 
   if ( argList ) {

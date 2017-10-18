@@ -4,12 +4,13 @@
  * run a gulp task. For example, if you want
  * to run node or bash files directly.
  */
-import { getArgsArray, IArgs } from './utils/parse-args';
+import { parseArgs, IArgs, getArgs } from './utils/parse-args';
 import './ui-tasks/generate';
 
 let gulp = require('gulp');
 
-const args: IArgs = getArgsArray();
+parseArgs();
+const args: IArgs = getArgs();
 
 /**
  * Change process working directory to root directory of cli.
