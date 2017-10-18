@@ -1,10 +1,10 @@
 {
   "name": "@sunpower/cli",
-  "version": "0.0.1-beta.18",
+  "version": "0.0.1-beta.20",
   "description": "Sunpower CLI",
   "main": "index.js",
   "bin": {
-    "ix": "./bin/ix"
+    "sp": "./bin/sp"
   },
   "repository": "https://github.com/UIUXEngineering/sunpower-cli.git",
   "author": "Jerry Orta <jerryorta.dev@gmail.com>",
