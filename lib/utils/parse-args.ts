@@ -76,8 +76,6 @@ export function getArgsArray(): IArgs {
       console.error(`${bold(red('No Params Provided'))}`);
     }
   }
-
-  return getArgs();
 }
 
 function parseTemplateParams(argList: string[]): void {
