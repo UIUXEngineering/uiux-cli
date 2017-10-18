@@ -182,6 +182,7 @@ function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
   gulpParams.srcTemplate = sources.srcTemplate;
   gulpParams.srcPlatform = sources.srcPlatform;
   gulpParams.srcModule = sources.srcModule;
+  gulpParams.srcTheme = sources.srcTheme;
 
   // GULP CWD
   // GULP CWD
