@@ -13,7 +13,8 @@ export enum templateTypes {
 export enum templatePaths {
   COMPONENT = 'templates/ui/component/base/**/*',
   CDK = 'templates/ui/cdk/base/**/*',
-  CDK_PLATFORM = 'templates/ui/material/platform/**/*',
+  CDK_PLATFORM = 'templates/ui/cdk/platform/**/*',
+  CDK_PLATFORM_THEME = 'templates/ui/cdk/theme/**/*',
   CDK_PLATFORM_MODULE = 'templates/ui/material/module/**/*',
   MATERIAL = 'templates/ui/material/base/**/*',
   MATERIAL_PLATFORM = 'templates/ui/material/platform/**/*',
