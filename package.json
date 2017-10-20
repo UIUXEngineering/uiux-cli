@@ -4,7 +4,7 @@
   "description": "Sunpower CLI",
   "main": "index.js",
   "bin": {
-    "sp": "./bin/sp"
+    "sp": "./bin/ix"
   },
   "repository": "https://github.com/UIUXEngineering/sunpower-cli.git",
   "author": "Jerry Orta <jerryorta.dev@gmail.com>",
