@@ -6,7 +6,7 @@
   "bin": {
     "ix": "./bin/ix"
   },
-  "repository": "https://github.com/UIUXEngineering/sunpower-cli.git",
+  "repository": "https://github.com/UIUXEngineering/uiux-cli.git",
   "author": "Jerry Orta <jerryorta.dev@gmail.com>",
   "license": "MIT",
   "scripts": {

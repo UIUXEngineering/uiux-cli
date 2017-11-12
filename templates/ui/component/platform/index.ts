@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright SunPower Corporation All Rights Reserved.
+ * Copyright UIUXEngineering Corporation All Rights Reserved.
  */
 
 export * from './public-api';

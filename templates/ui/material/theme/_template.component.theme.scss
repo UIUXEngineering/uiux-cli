@@ -2,7 +2,7 @@
 @import '../core/typography/typography-utils';
 
 // See sample at https://github.com/angular/material2/blob/master/src/lib/core/selection/pseudo-checkbox/_pseudo-checkbox-theme.scss
-@mixin sunpower-<%= dashCaseBasename %>-theme($theme) {
+@mixin uiux-<%= dashCaseBasename %>-theme($theme) {
   $is-dark-theme: map-get($theme, is-dark);
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
@@ -17,7 +17,7 @@
 
 }
 
-@mixin sunpower-<%= dashCaseBasename %>-typography($config) {
+@mixin uiux-<%= dashCaseBasename %>-typography($config) {
 
   // example only, change for your implementation
   //.sp-<%= name %>-subtitle,

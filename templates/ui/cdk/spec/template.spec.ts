@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright SunPower Corporation All Rights Reserved.
+ * Copyright UIUXEngineering Corporation All Rights Reserved.
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
