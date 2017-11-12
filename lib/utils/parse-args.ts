@@ -16,10 +16,12 @@ export interface IArgs {
   template: string;
   templateVars: {
     name?: string;
+    className?: string;
     dashCaseBasename?: string;
     componentFilename?: string;
     moduleFilename?: string;
     themeFilename?: string;
+    specFilename?: string;
   };
   gulp: IGulpParams;
 }
@@ -30,11 +32,13 @@ export interface IGulpParams {
   srcPlatform: string;
   srcModule: string;
   srcTheme: string;
+  srcSpec: string;
   cwd: string;
   dest: string;
   renameComponent: IGulpRename;
   renameModule: IGulpRename;
   renameTheme: IGulpRename;
+  renameSpec: IGulpRename;
 }
 
 export interface IGulpRename {
@@ -59,9 +63,13 @@ let args: IArgs = {
     srcPlatform: '',
     srcModule: '',
     srcTheme: '',
+    srcSpec: '',
     cwd: '',
     dest: '',
     renameComponent: {
+      basename: '',
+    },
+    renameSpec: {
       basename: '',
     },
     renameModule: {
@@ -99,6 +107,8 @@ export function parseArgs(): IProcessState {
 function parseTemplateParams(argList: string[]): void {
 
   let index: number = argList.indexOf('g') || argList.indexOf('generate');
+
+  // get rest of arg list after 'g' or 'generage'
   let opts: string[] = argList.slice(index);
 
   if ( !opts[ 1 ] ) {
@@ -118,27 +128,49 @@ function parseTemplateParams(argList: string[]): void {
   args.gulp.task = gulpTasks.GENERATE;
 
   // Template Variables
+  // templateTypes enum
   args.template = opts[ 1 ].toUpperCase();
+
   args.templateVars.name = opts[ 2 ];
+  args.templateVars.className = stringUtils.classify(opts[ 2 ]);
 
-  Object.assign(args.gulp, parseGulpPaths(args, opts));
 
-  if ( args.template === templateTypes.MATERIAL.toString() ) {
+    Object.assign(args.gulp, parseGulpPaths(args, opts));
 
-    // concat instead of using gulp-template
-    // 'suffix'
-    args.templateVars.dashCaseBasename = args.gulp.renameComponent.basename;
+  // concat instead of using gulp-template
+  // 'suffix'
+  args.templateVars.dashCaseBasename = args.gulp.renameComponent.basename;
 
-    // platform
-    args.templateVars.componentFilename =
-      args.gulp.renameComponent.basename + args.gulp.renameComponent.suffix;
+  // platform
+  args.templateVars.componentFilename =
+    args.gulp.renameComponent.basename + args.gulp.renameComponent.suffix;
 
-    args.templateVars.moduleFilename =
-      args.gulp.renameModule.basename + args.gulp.renameModule.suffix;
+  args.templateVars.specFilename =
+    args.gulp.renameSpec.basename + args.gulp.renameSpec.suffix;
 
-    args.templateVars.themeFilename =
-      args.gulp.renameTheme.basename + args.gulp.renameTheme.suffix;
-  }
+  args.templateVars.moduleFilename =
+    args.gulp.renameModule.basename + args.gulp.renameModule.suffix;
+
+  args.templateVars.themeFilename =
+    args.gulp.renameTheme.basename + args.gulp.renameTheme.suffix;
+
+  // if ( args.template === templateTypes.MATERIAL.toString() ) {
+  //
+  //   // concat instead of using gulp-template
+  //   // 'suffix'
+  //   args.templateVars.dashCaseBasename = args.gulp.renameComponent.basename;
+  //
+  //   // platform
+  //   args.templateVars.componentFilename =
+  //     args.gulp.renameComponent.basename + args.gulp.renameComponent.suffix;
+  //
+  //   args.templateVars.moduleFilename =
+  //     args.gulp.renameModule.basename + args.gulp.renameModule.suffix;
+  //
+  //   args.templateVars.themeFilename =
+  //     args.gulp.renameTheme.basename + args.gulp.renameTheme.suffix;
+  // }
+
 }
 
 function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
@@ -148,9 +180,13 @@ function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
     srcPlatform: '',
     srcModule: '',
     srcTheme: '',
+    srcSpec: '',
     cwd: '',
     dest: '',
     renameComponent: {
+      basename: '',
+    },
+    renameSpec: {
       basename: '',
     },
     renameModule: {
@@ -163,15 +199,18 @@ function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
 
   // Base File Name
   gulpParams.renameComponent.basename = stringUtils.dasherize(opts[ 2 ]);
+  gulpParams.renameSpec.basename = stringUtils.dasherize(opts[ 2 ]);
   gulpParams.renameModule.basename = stringUtils.dasherize(opts[ 2 ]);
   gulpParams.renameTheme.basename = '_' + stringUtils.dasherize(opts[ 2 ]);
-  if ( _args.template === templateTypes.MATERIAL.toString() ) {
 
-    // concat instead of using gulp-template
-    // 'suffix'
-    gulpParams.renameComponent.suffix = '.component';
-    gulpParams.renameModule.suffix = '.module';
-    gulpParams.renameTheme.suffix = '.theme';
+  // concat instead of using gulp-template
+  // 'suffix'
+  gulpParams.renameComponent.suffix = '.component';
+  gulpParams.renameModule.suffix = '.module';
+  gulpParams.renameTheme.suffix = '.theme';
+
+  if ( _args.template === templateTypes.MATERIAL || _args.template === templateTypes.COMPONENT ) {
+    gulpParams.renameSpec.suffix = '.component.spec';
   }
 
   // GULP SRC
@@ -183,6 +222,7 @@ function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
   gulpParams.srcPlatform = sources.srcPlatform;
   gulpParams.srcModule = sources.srcModule;
   gulpParams.srcTheme = sources.srcTheme;
+  gulpParams.srcSpec = sources.srcSpec;
 
   // GULP CWD
   // GULP CWD
@@ -241,6 +281,7 @@ function gulpSrc(_templateType: string): any {
         srcPlatform: templatePaths.MATERIAL_PLATFORM,
         srcModule: templatePaths.MATERIAL_PLATFORM_MODULE,
         srcTheme: templatePaths.MATERIAL_PLATFORM_THEME,
+        srcSpec: templatePaths.MATERIAL_PLATFORM_SPEC,
       };
 
     // ui platform
@@ -249,6 +290,7 @@ function gulpSrc(_templateType: string): any {
         srcTemplate: templatePaths.CDK,
         srcPlatform: templatePaths.CDK_PLATFORM,
         srcModule: templatePaths.CDK_PLATFORM_MODULE,
+        srcSpec: templatePaths.CDK_PLATFORM_SPEC,
         srcTheme: null,
       };
 
@@ -256,9 +298,10 @@ function gulpSrc(_templateType: string): any {
     case templateTypes.COMPONENT:
       return {
         srcTemplate: templatePaths.COMPONENT,
-        srcPlatform: null,
-        srcModule: null,
-        srcTheme: null,
+        srcPlatform: templatePaths.COMPONENT_PLATFORM,
+        srcModule: templatePaths.COMPONENT_PLATFORM_MODULE,
+        srcTheme: templatePaths.COMPONENT_PLATFORM_THEME,
+        srcSpec: templatePaths.COMPONENT_PLATFORM_SPEC,
       };
 
     default:

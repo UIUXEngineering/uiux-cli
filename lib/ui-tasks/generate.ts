@@ -34,7 +34,7 @@ task(':ui-platform', function (done) {
 
 });
 
-task(':ui-platform-module', function (done) {
+task(':ui-module', function (done) {
   const args: IArgs = getArgs();
 
   if (args.gulp.srcModule) {
@@ -49,7 +49,7 @@ task(':ui-platform-module', function (done) {
 
 });
 
-task(':ui-platform-theme', function (done) {
+task(':ui-theme', function (done) {
   const args: IArgs = getArgs();
 
   if (args.gulp.srcTheme) {
@@ -64,6 +64,21 @@ task(':ui-platform-theme', function (done) {
 
 });
 
+task(':ui-spec', function (done) {
+  const args: IArgs = getArgs();
+
+  if (args.gulp.srcSpec) {
+    return src(args.gulp.srcSpec)
+      .pipe(data(() => (args.templateVars)))
+      .pipe(gulpTemplate())
+      .pipe(gulpRename(args.gulp.renameSpec))
+      .pipe(dest(args.gulp.dest));
+  } else {
+    done();
+  }
+
+});
+
 // *.toString() is to just make typescript compiler happy.
 task(gulpTasks.GENERATE.toString(), sequenceTask(':ui-template',
-  ':ui-platform', ':ui-platform-module', ':ui-platform-theme'));
+  ':ui-platform', ':ui-module', ':ui-theme', ':ui-spec'));

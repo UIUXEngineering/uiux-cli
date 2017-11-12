@@ -1,24 +1,37 @@
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * Copyright SunPower Corporation All Rights Reserved.
  */
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  AfterViewInit,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 @Component({
   selector: 'app-template',
-  templateUrl: './<%= componentFilename %>.html',
-  styleUrls: ['./<%= componentFilename %>.css']
+  templateUrl: './<%= dashCaseBasename %>.html',
+  styleUrls: ['./<%= dashCaseBasename %>.scss'],
+  encapsulation: ViewEncapsulation.None,
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {'class': '<%= dashCaseBasename %>'},
 })
-export class <%= name %>Component implements OnInit, OnDestroy {
+export class <%= className %>Component implements OnInit, AfterViewInit, OnDestroy {
 
-  constructor() { /* noop */}
+  constructor(
+    private changeDetector: ChangeDetectorRef
+  ) { /* noop */ }
 
   ngOnInit(): void { /* noop */ }
 
-  ngOnDestroy(): void { /* noop */}
+  ngAfterViewInit(): void { /* noop */ }
+
+  ngOnDestroy(): void { /* noop */ }
 
 }

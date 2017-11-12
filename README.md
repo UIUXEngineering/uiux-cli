@@ -13,7 +13,30 @@ Node utility app to generate templates, and common tasks.
 ```bash
 
     npm install -g @sunpower/cli
+    
 ```
+
+
+### Generate Material Component
+
+Path will default to ./src/lib/
+
+```bash
+
+    sp g material [ component name ]
+    
+```
+
+### Generate CDK Component
+
+Path will default to ./src/cdk/
+
+```bash
+
+    sp g cdk [ component name ]
+    
+```
+
 
 
 ### build
