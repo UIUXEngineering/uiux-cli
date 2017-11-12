@@ -1,7 +1,7 @@
 {
-  "name": "@sunpower/cli",
+  "name": "@uiux/cli",
   "version": "1.0.0",
-  "description": "Sunpower CLI",
+  "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
     "ix": "./bin/ix"
