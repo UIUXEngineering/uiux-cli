@@ -4,15 +4,15 @@ Node utility app to generate templates, and common tasks.
 
 #### Quick links ( TODO update urls once in Sunpower Account )
 
-[SunPower Material](https://bitbucket.org/jerryorta-dev/sunpower-material) 
-[Sunpower Docs](https://bitbucket.org/jerryorta-dev/sunpower-material-io)
+[IX Material](https://github.com/UIUXEngineering/ix-material)   
+[IX Docs](https://github.com/UIUXEngineering/ix-material.angular.io)
 
 
 ### Install
 
 ```bash
 
-    npm install -g @sunpower/cli
+    npm install -g @uiux/cli
     
 ```
 
@@ -23,7 +23,7 @@ Path will default to ./src/app/
 
 ```bash
 
-    sp g component [  name ] [ path ]
+    ix g component [  name ] [ path ]
     
 ```
 
@@ -33,7 +33,7 @@ Path will default to ./src/lib/
 
 ```bash
 
-    sp g material [  name ]
+    ix g material [  name ]
     
 ```
 
@@ -43,7 +43,7 @@ Path will default to ./src/cdk/
 
 ```bash
 
-    sp g cdk [ name ]
+    ix g cdk [ name ]
     
 ```
 
