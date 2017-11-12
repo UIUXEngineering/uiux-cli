@@ -1,8 +1,8 @@
-# Sunpower CLI
+# UIUX CLI
 
 Node utility app to generate templates, and common tasks.
 
-#### Quick links ( TODO update urls once in Sunpower Account )
+#### Quick links 
 
 [IX Material](https://github.com/UIUXEngineering/ix-material)   
 [IX Docs](https://github.com/UIUXEngineering/ix-material.angular.io)
