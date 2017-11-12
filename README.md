@@ -17,23 +17,33 @@ Node utility app to generate templates, and common tasks.
 ```
 
 
+### Generate App Component Module
+
+Path will default to ./src/app/
+
+```bash
+
+    sp g component [  name ] [ path ]
+    
+```
+
 ### Generate Material Component
 
 Path will default to ./src/lib/
 
 ```bash
 
-    sp g material [ component name ]
+    sp g material [  name ]
     
 ```
 
-### Generate CDK Component
+### Generate CDK
 
 Path will default to ./src/cdk/
 
 ```bash
 
-    sp g cdk [ component name ]
+    sp g cdk [ name ]
     
 ```
 

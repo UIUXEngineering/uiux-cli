@@ -1,5 +1,5 @@
 import { task, src, dest } from 'gulp';
-import { gulpTasks } from './enums';
+import { gulpTasks } from '../utils/enums';
 import { getArgs, IArgs } from '../utils/parse-args';
 import { sequenceTask } from '../utils/sequence-task';
 
@@ -80,5 +80,5 @@ task(':ui-spec', function (done) {
 });
 
 // *.toString() is to just make typescript compiler happy.
-task(gulpTasks.GENERATE.toString(), sequenceTask(':ui-template',
+task(gulpTasks.GENERATE, sequenceTask(':ui-template',
   ':ui-platform', ':ui-module', ':ui-theme', ':ui-spec'));

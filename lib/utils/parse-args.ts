@@ -1,6 +1,7 @@
-import { red, bold } from 'chalk';
-import { join, relative, resolve } from 'path';
-import { templateTypes, templatePaths, gulpTasks } from '../ui-tasks/enums';
+import { bold, red } from 'chalk';
+import { gulpTasks } from './enums';
+import { gulpPaths } from './gulp/gulpPaths';
+import { templateVars } from './template/templateVars';
 
 const stringUtils = require('ember-cli-string-utils');
 
@@ -122,209 +123,21 @@ function parseTemplateParams(argList: string[]): void {
     return;
   }
 
+  // Template Variables
+  // templateTypes enum
+  args.template = opts[ 1 ].toUpperCase();
+
+  args.gulp = gulpPaths(args, opts);
+
   // GULP TASK
   // GULP TASK
   // GULP TASK
   args.gulp.task = gulpTasks.GENERATE;
 
-  // Template Variables
-  // templateTypes enum
-  args.template = opts[ 1 ].toUpperCase();
-
-  args.templateVars.name = opts[ 2 ];
-  args.templateVars.className = stringUtils.classify(opts[ 2 ]);
-
-
-    Object.assign(args.gulp, parseGulpPaths(args, opts));
-
-  // concat instead of using gulp-template
-  // 'suffix'
-  args.templateVars.dashCaseBasename = args.gulp.renameComponent.basename;
-
-  // platform
-  args.templateVars.componentFilename =
-    args.gulp.renameComponent.basename + args.gulp.renameComponent.suffix;
-
-  args.templateVars.specFilename =
-    args.gulp.renameSpec.basename + args.gulp.renameSpec.suffix;
-
-  args.templateVars.moduleFilename =
-    args.gulp.renameModule.basename + args.gulp.renameModule.suffix;
-
-  args.templateVars.themeFilename =
-    args.gulp.renameTheme.basename + args.gulp.renameTheme.suffix;
-
-  // if ( args.template === templateTypes.MATERIAL.toString() ) {
-  //
-  //   // concat instead of using gulp-template
-  //   // 'suffix'
-  //   args.templateVars.dashCaseBasename = args.gulp.renameComponent.basename;
-  //
-  //   // platform
-  //   args.templateVars.componentFilename =
-  //     args.gulp.renameComponent.basename + args.gulp.renameComponent.suffix;
-  //
-  //   args.templateVars.moduleFilename =
-  //     args.gulp.renameModule.basename + args.gulp.renameModule.suffix;
-  //
-  //   args.templateVars.themeFilename =
-  //     args.gulp.renameTheme.basename + args.gulp.renameTheme.suffix;
-  // }
+  args = templateVars(args, opts);
 
 }
 
-function parseGulpPaths(_args: IArgs, opts: string[]): IGulpParams {
 
-  let gulpParams: IGulpParams = {
-    srcTemplate: '',
-    srcPlatform: '',
-    srcModule: '',
-    srcTheme: '',
-    srcSpec: '',
-    cwd: '',
-    dest: '',
-    renameComponent: {
-      basename: '',
-    },
-    renameSpec: {
-      basename: '',
-    },
-    renameModule: {
-      basename: '',
-    },
-    renameTheme: {
-      basename: '',
-    },
-  };
 
-  // Base File Name
-  gulpParams.renameComponent.basename = stringUtils.dasherize(opts[ 2 ]);
-  gulpParams.renameSpec.basename = stringUtils.dasherize(opts[ 2 ]);
-  gulpParams.renameModule.basename = stringUtils.dasherize(opts[ 2 ]);
-  gulpParams.renameTheme.basename = '_' + stringUtils.dasherize(opts[ 2 ]);
 
-  // concat instead of using gulp-template
-  // 'suffix'
-  gulpParams.renameComponent.suffix = '.component';
-  gulpParams.renameModule.suffix = '.module';
-  gulpParams.renameTheme.suffix = '.theme';
-
-  if ( _args.template === templateTypes.MATERIAL || _args.template === templateTypes.COMPONENT ) {
-    gulpParams.renameSpec.suffix = '.component.spec';
-  }
-
-  // GULP SRC
-  // GULP SRC
-  // GULP SRC
-  let sources: any = gulpSrc(_args.template);
-
-  gulpParams.srcTemplate = sources.srcTemplate;
-  gulpParams.srcPlatform = sources.srcPlatform;
-  gulpParams.srcModule = sources.srcModule;
-  gulpParams.srcTheme = sources.srcTheme;
-  gulpParams.srcSpec = sources.srcSpec;
-
-  // GULP CWD
-  // GULP CWD
-  // GULP CWD
-
-  /**
-   * gulpParams.cwd = Root directory of cli.
-   */
-  gulpParams.cwd = resolve(__dirname, '../', '../');
-
-  // GULP DEST
-  // GULP DEST
-  // GULP DEST
-  let destProjectRootPath: string = relative(gulpParams.cwd, process.cwd());
-
-  let destRelativeToProjectPath = '';
-
-  // if path provided
-  if ( opts[ 3 ] ) {
-
-    /**
-     * Change name from camel case to dash case.
-     * @type {string}
-     */
-    destRelativeToProjectPath = opts[ 3 ] + '/' + stringUtils.dasherize(opts[ 2 ]);
-  } else {
-    /**
-     * Change name from camel case to dash case.
-     * @type {string}
-     */
-    destRelativeToProjectPath = stringUtils.dasherize(opts[ 2 ]);
-  }
-
-  gulpParams.dest = join(
-    destProjectRootPath,
-    gulpBaseDestinationDirectory(_args),
-    destRelativeToProjectPath);
-
-  return gulpParams;
-}
-
-/**
- * srcTemplates actually returns a string, typescript
- * data type checker is wrong.
- *
- * @param {string} _templateType
- * @returns {number}
- */
-function gulpSrc(_templateType: string): any {
-  switch ( _templateType ) {
-
-    // ui platform
-    case templateTypes.MATERIAL:
-      return {
-        srcTemplate: templatePaths.MATERIAL,
-        srcPlatform: templatePaths.MATERIAL_PLATFORM,
-        srcModule: templatePaths.MATERIAL_PLATFORM_MODULE,
-        srcTheme: templatePaths.MATERIAL_PLATFORM_THEME,
-        srcSpec: templatePaths.MATERIAL_PLATFORM_SPEC,
-      };
-
-    // ui platform
-    case templateTypes.CDK:
-      return {
-        srcTemplate: templatePaths.CDK,
-        srcPlatform: templatePaths.CDK_PLATFORM,
-        srcModule: templatePaths.CDK_PLATFORM_MODULE,
-        srcSpec: templatePaths.CDK_PLATFORM_SPEC,
-        srcTheme: null,
-      };
-
-    // ui platform
-    case templateTypes.COMPONENT:
-      return {
-        srcTemplate: templatePaths.COMPONENT,
-        srcPlatform: templatePaths.COMPONENT_PLATFORM,
-        srcModule: templatePaths.COMPONENT_PLATFORM_MODULE,
-        srcTheme: templatePaths.COMPONENT_PLATFORM_THEME,
-        srcSpec: templatePaths.COMPONENT_PLATFORM_SPEC,
-      };
-
-    default:
-      return '';
-  }
-}
-
-function gulpBaseDestinationDirectory(_args: IArgs): string {
-  switch ( args.template ) {
-
-    // ui platform
-    case templateTypes.MATERIAL:
-      return 'src/lib';
-
-    // ui platform
-    case templateTypes.CDK:
-      return 'src/cdk';
-
-    // ui platform
-    case templateTypes.COMPONENT:
-      return 'src/app';
-
-    default:
-      return '';
-  }
-}

@@ -7,7 +7,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { <%= className %>Component } from './<%= componentFilename %>';
 
-describe('<%= name %>Component', () => {
+describe('<%= className %>Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
