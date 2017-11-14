@@ -29,14 +29,14 @@ export interface IArgs {
 
 export interface IGulpParams {
   task?: any;
-  srcTemplate: string;
+  srcBase: string;
   srcPlatform: string;
   srcModule: string;
   srcTheme: string;
   srcSpec: string;
   cwd: string;
   dest: string;
-  renameComponent: IGulpRename;
+  renameBase: IGulpRename;
   renameModule: IGulpRename;
   renameTheme: IGulpRename;
   renameSpec: IGulpRename;
@@ -60,14 +60,14 @@ let args: IArgs = {
 
   gulp: {
     task: '',
-    srcTemplate: '',
+    srcBase: '',
     srcPlatform: '',
     srcModule: '',
     srcTheme: '',
     srcSpec: '',
     cwd: '',
     dest: '',
-    renameComponent: {
+    renameBase: {
       basename: '',
     },
     renameSpec: {

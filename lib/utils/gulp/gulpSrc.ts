@@ -1,5 +1,5 @@
 /**
- * srcTemplates actually returns a string, typescript
+ * srcBases actually returns a string, typescript
  * data type checker is wrong.
  *
  * @param {string} _templateType
@@ -13,7 +13,7 @@ export function gulpSrc(_templateType: string): any {
     // ui platform
     case templateTypes.MATERIAL:
       return {
-        srcTemplate: templatePaths.MATERIAL,
+        srcBase: templatePaths.MATERIAL,
         srcPlatform: templatePaths.MATERIAL_PLATFORM,
         srcModule: templatePaths.MATERIAL_PLATFORM_MODULE,
         srcTheme: templatePaths.MATERIAL_PLATFORM_THEME,
@@ -23,7 +23,7 @@ export function gulpSrc(_templateType: string): any {
     // ui platform
     case templateTypes.CDK:
       return {
-        srcTemplate: templatePaths.CDK,
+        srcBase: templatePaths.CDK,
         srcPlatform: templatePaths.CDK_PLATFORM,
         srcModule: templatePaths.CDK_PLATFORM_MODULE,
         srcSpec: templatePaths.CDK_PLATFORM_SPEC,
@@ -33,7 +33,7 @@ export function gulpSrc(_templateType: string): any {
     // ui platform
     case templateTypes.COMPONENT:
       return {
-        srcTemplate: templatePaths.COMPONENT,
+        srcBase: templatePaths.COMPONENT,
         srcPlatform: templatePaths.COMPONENT_PLATFORM,
         srcModule: templatePaths.COMPONENT_PLATFORM_MODULE,
         srcTheme: templatePaths.COMPONENT_PLATFORM_THEME,

@@ -10,11 +10,11 @@ export function templateVars(args: IArgs, opts: string[]): IArgs {
 
   // concat instead of using gulp-template
   // 'suffix'
-  args.templateVars.dashCaseBasename = args.gulp.renameComponent.basename;
+  args.templateVars.dashCaseBasename = args.gulp.renameBase.basename;
 
   // platform
   args.templateVars.componentFilename =
-    args.gulp.renameComponent.basename + args.gulp.renameComponent.suffix;
+    args.gulp.renameBase.basename + args.gulp.renameBase.suffix;
 
   args.templateVars.specFilename =
     args.gulp.renameSpec.basename + args.gulp.renameSpec.suffix;
