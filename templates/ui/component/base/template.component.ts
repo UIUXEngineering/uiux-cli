@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-template',
+  selector: '<%= dashCaseBasename %>',
   templateUrl: './<%= dashCaseBasename %>.html',
   styleUrls: ['./<%= dashCaseBasename %>.scss'],
   encapsulation: ViewEncapsulation.None,
