@@ -8,14 +8,14 @@ const stringUtils = require('ember-cli-string-utils');
 export function gulpPaths(_args: IArgs, opts: string[]): IGulpParams {
 
   let gulpParams: IGulpParams = {
-    srcTemplate: '',
+    srcBase: '',
     srcPlatform: '',
     srcModule: '',
     srcTheme: '',
     srcSpec: '',
     cwd: '',
     dest: '',
-    renameComponent: {
+    renameBase: {
       basename: '',
       suffix: '',
     },
@@ -34,7 +34,7 @@ export function gulpPaths(_args: IArgs, opts: string[]): IGulpParams {
   };
 
   // Base File Name
-  gulpParams.renameComponent.basename = stringUtils.dasherize(opts[ 2 ]);
+  gulpParams.renameBase.basename = stringUtils.dasherize(opts[ 2 ]);
   gulpParams.renameSpec.basename = stringUtils.dasherize(opts[ 2 ]);
   gulpParams.renameModule.basename = stringUtils.dasherize(opts[ 2 ]);
   gulpParams.renameTheme.basename = '_' + stringUtils.dasherize(opts[ 2 ]);
@@ -46,7 +46,7 @@ export function gulpPaths(_args: IArgs, opts: string[]): IGulpParams {
   gulpParams.renameTheme.suffix = '.theme';
 
   if ( _args.template === templateTypes.MATERIAL || _args.template === templateTypes.COMPONENT ) {
-    gulpParams.renameComponent.suffix = '.component';
+    gulpParams.renameBase.suffix = '.component';
     gulpParams.renameSpec.suffix = '.component.spec';
   }
 
@@ -59,7 +59,7 @@ export function gulpPaths(_args: IArgs, opts: string[]): IGulpParams {
   // GULP SRC
   let sources: any = gulpSrc(_args.template);
 
-  gulpParams.srcTemplate = sources.srcTemplate;
+  gulpParams.srcBase = sources.srcBase;
   gulpParams.srcPlatform = sources.srcPlatform;
   gulpParams.srcModule = sources.srcModule;
   gulpParams.srcTheme = sources.srcTheme;

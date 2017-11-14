@@ -7,13 +7,13 @@ const data = require('gulp-data');
 const gulpTemplate = require('gulp-template');
 const gulpRename = require('gulp-rename');
 
-task(':ui-template', function () {
+task(':ui-base', function () {
   const args: IArgs = getArgs();
 
-  return src(args.gulp.srcTemplate)
+  return src(args.gulp.srcBase)
     .pipe(data(() => (args.templateVars)))
     .pipe(gulpTemplate())
-    .pipe(gulpRename(args.gulp.renameComponent))
+    .pipe(gulpRename(args.gulp.renameBase))
     .pipe(dest(args.gulp.dest));
 });
 
@@ -80,5 +80,5 @@ task(':ui-spec', function (done) {
 });
 
 // *.toString() is to just make typescript compiler happy.
-task(gulpTasks.GENERATE, sequenceTask(':ui-template',
+task(gulpTasks.GENERATE, sequenceTask(':ui-base',
   ':ui-platform', ':ui-module', ':ui-theme', ':ui-spec'));
