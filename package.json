@@ -1,6 +1,6 @@
 {
   "name": "@sunpower/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sunpower CLI",
   "main": "index.js",
   "bin": {
