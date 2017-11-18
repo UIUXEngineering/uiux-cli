@@ -9,10 +9,20 @@ import { <%= className %>Component } from './<%= componentFilename %>';
 
 describe('<%= className %>Component', () => {
 
+  let test: any;
+  let customInjector: any;
+
   beforeEach(async(() => {
+
+    test = {};
+    customInjector = [];
+
+    // test.something = createSomethingMock();
+    // customInjector.push(test.something.provider);
+
     TestBed.configureTestingModule({
       declarations: [ <%= className %>Component ],
-      providers: []
+      providers: [...customInjector]
     });
 
     TestBed.overrideComponent(<%= className %>Component, {
@@ -29,11 +39,28 @@ describe('<%= className %>Component', () => {
     // spyOn option
   });
 
-  it('should be created', () => {
-    const fixture = TestBed.createComponent(<%= className %>Component);
-    const cmp = fixture.debugElement.componentInstance;
+  afterEach(() => {
+    test = null;
+    customInjector = null;
+  });
 
+  describe('upon init', () => {
+    let fixture;
+    let cmp;
 
-    expect(cmp).toBeTruthy();
+    beforeEach(() => {
+      fixture = TestBed.createComponent(<%= className %>Component);
+      cmp = fixture.debugElement.componentInstance;
+    });
+
+    afterEach(() => {
+      fixture = undefined;
+      cmp = undefined;
+    });
+
+    it('should be created', () => {
+      expect(cmp).toBeDefined();
+    });
+
   });
 });

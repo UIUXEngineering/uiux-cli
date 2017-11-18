@@ -2,11 +2,11 @@ const templateTypes = {
   API_SERVICE: 'API.SERVICE',
 
   // ui
-  COMPONENT: 'COMPONENT',
   CDK: 'CDK',
+  COMPONENT: 'COMPONENT',
+  COMPONENT_SPEC: 'COMPONENT.SPEC',
   MATERIAL: 'MATERIAL',
   SERVICE: 'SERVICE',
-  COMPONENT_SPEC: 'COMPONENT.SPEC',
 };
 
 // **ATTENTION** properties need to match templateTypes
@@ -27,7 +27,13 @@ const templatePaths = {
   MATERIAL_PLATFORM:              'templates/ui/material/platform/**/*',
   MATERIAL_PLATFORM_THEME:        'templates/ui/material/theme/**/*',
   MATERIAL_PLATFORM_SPEC:         'templates/ui/material/spec/**/*',
-  MATERIAL_PLATFORM_MODULE:       'templates/ui/material/module/**/*'
+  MATERIAL_PLATFORM_MODULE:       'templates/ui/material/module/**/*',
+
+  SERVICE:                        'templates/ui/service/base/**/*',
+  SERVICE_PLATFORM:               'templates/ui/service/platform/**/*',
+  SERVICE_PLATFORM_THEME:         'templates/ui/service/theme/**/*',
+  SERVICE_PLATFORM_SPEC:          'templates/ui/service/spec/**/*',
+  SERVICE_PLATFORM_MODULE:        'templates/ui/service/module/**/*'
 };
 
 const gulpTasks = {
