@@ -50,7 +50,7 @@ export function gulpPaths(_args: IArgs, opts: string[]): IGulpParams {
     gulpParams.renameSpec.suffix = '.component.spec';
   }
 
-  if ( _args.template === templateTypes.CDK ) {
+  if ( _args.template === templateTypes.CDK ||  _args.template === templateTypes.SERVICE) {
     gulpParams.renameSpec.suffix = '.spec';
   }
 

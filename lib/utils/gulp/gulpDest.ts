@@ -17,6 +17,10 @@ export function gulpDest(args: IArgs): string {
     case templateTypes.COMPONENT:
       return 'src/app';
 
+    // ui platform
+    case templateTypes.SERVICE:
+      return 'src/service';
+
     default:
       return '';
   }
