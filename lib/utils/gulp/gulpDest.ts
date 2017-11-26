@@ -7,19 +7,19 @@ export function gulpDest(args: IArgs): string {
 
     // ui platform
     case templateTypes.MATERIAL:
-      return 'src/lib';
+      return 'src/ui-lib';
 
     // ui platform
     case templateTypes.CDK:
-      return 'src/cdk';
+      return 'src/ui-cdk';
 
     // ui platform
     case templateTypes.COMPONENT:
-      return 'src/app';
+      return 'src/ui-app';
 
     // ui platform
     case templateTypes.SERVICE:
-      return 'src/service';
+      return 'src/ui-service';
 
     default:
       return '';
