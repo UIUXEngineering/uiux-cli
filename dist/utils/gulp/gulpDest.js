@@ -5,16 +5,16 @@ function gulpDest(args) {
     switch (args.template) {
         // ui platform
         case enums_1.templateTypes.MATERIAL:
-            return 'src/lib';
+            return 'src/ui-lib';
         // ui platform
         case enums_1.templateTypes.CDK:
-            return 'src/cdk';
+            return 'src/ui-cdk';
         // ui platform
         case enums_1.templateTypes.COMPONENT:
-            return 'src/app';
+            return 'src/ui-app';
         // ui platform
         case enums_1.templateTypes.SERVICE:
-            return 'src/service';
+            return 'src/ui-service';
         default:
             return '';
     }
