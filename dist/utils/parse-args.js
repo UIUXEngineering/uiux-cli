@@ -4,9 +4,12 @@ var chalk_1 = require("chalk");
 var enums_1 = require("./enums");
 var gulpPaths_1 = require("./gulp/gulpPaths");
 var templateVars_1 = require("./template/templateVars");
+var path_1 = require("path");
 var stringUtils = require('ember-cli-string-utils');
 var processState = {
     canProcess: false,
+    template: false,
+    svg: false,
 };
 var args = {
     template: '',
@@ -47,7 +50,14 @@ function parseArgs() {
         }
         else if (argList.indexOf('g') !== -1 || argList.indexOf('generate') !== -1) {
             processState.canProcess = true;
+            processState.template = true;
             parseTemplateParams(argList);
+        }
+        else if (argList.indexOf('svg') !== -1) {
+            processState.canProcess = true;
+            processState.svg = true;
+            args.gulp.cwd = path_1.resolve(__dirname, '../', '../');
+            args.gulp.task = 'svg-icons';
         }
         else {
             console.error("" + chalk_1.bold(chalk_1.red('No Params Provided')));

@@ -2,15 +2,20 @@ import { bold, red } from 'chalk';
 import { gulpTasks } from './enums';
 import { gulpPaths } from './gulp/gulpPaths';
 import { templateVars } from './template/templateVars';
+import { resolve } from 'path';
 
 const stringUtils = require('ember-cli-string-utils');
 
 export interface IProcessState {
   canProcess: boolean;
+  template: boolean;
+  svg: boolean;
 }
 
 let processState = {
   canProcess: false,
+  template: false,
+  svg: false,
 };
 
 export interface IArgs {
@@ -96,7 +101,13 @@ export function parseArgs(): IProcessState {
       console.log(pkg.version);
     } else if ( argList.indexOf('g') !== -1 || argList.indexOf('generate') !== -1 ) {
       processState.canProcess = true;
+      processState.template = true;
       parseTemplateParams(argList);
+    } else if (argList.indexOf('svg') !== -1 ) {
+      processState.canProcess = true;
+      processState.svg = true;
+      args.gulp.cwd = resolve(__dirname, '../', '../');
+      args.gulp.task = 'svg-icons';
     } else {
       console.error(`${bold(red('No Params Provided'))}`);
     }

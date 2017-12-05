@@ -1,6 +1,6 @@
 {
   "name": "@uiux/cli",
-  "version": "1.0.8",
+  "version": "1.1.8",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
@@ -16,7 +16,9 @@
     "chalk": "^2.1.0",
     "ember-cli-string-utils": "^1.1.0",
     "gulp": "^3.9.1",
+    "gulp-cheerio": "0.6.2",
     "gulp-data": "^1.2.1",
+    "gulp-md-svgstore": "6.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-template": "^4.0.0",
     "run-sequence": "^2.2.0"
