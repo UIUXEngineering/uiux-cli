@@ -1,6 +1,7 @@
 import { mkdir, } from 'fs';
 import { dirname, join, relative, resolve } from 'path';
 import { IArgs } from './parse-args';
+import { CONSTANSTS } from '../constants';
 
 const stringUtils = require( 'ember-cli-string-utils' );
 
@@ -49,7 +50,7 @@ export function parseCLIJson( args: IArgs ): ICLITasks {
 
   cliTasks.relativeToProjectRoot = relative( resolve( __dirname, '../', '../' ), destProjectRootPath );
 
-  let cliFile: ICLITasks = require( join( relative( resolve( __dirname ), destProjectRootPath ), '.sp-cli.json' ) );
+  let cliFile: ICLITasks = require( join( relative( resolve( __dirname ), destProjectRootPath ), CONSTANSTS.CLI_NAME ) );
 
   if ( cliFile[ 'svgIcons' ] ) {
     const iconConfigs: any = cliFile[ 'svgIcons' ];
