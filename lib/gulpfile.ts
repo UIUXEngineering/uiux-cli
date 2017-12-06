@@ -66,7 +66,7 @@ if ( state.canProcess ) {
           }
 
           console.log( '\n' );
-          console.log(yellow(`    reference: ${filePath}`));
+          console.log(yellow(`    reference: ${cliTasks.svgIcons.tsReference}`));
           console.log( '\n' );
         } );
       }

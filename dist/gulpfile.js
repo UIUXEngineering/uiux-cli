@@ -49,7 +49,7 @@ if (state.canProcess) {
                         return console.log(err);
                     }
                     console.log('\n');
-                    console.log(chalk_1.yellow("    reference: " + filePath_1));
+                    console.log(chalk_1.yellow("    reference: " + cliTasks_1.svgIcons.tsReference));
                     console.log('\n');
                 });
             }
