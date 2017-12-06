@@ -13,6 +13,7 @@ import { writeFile } from 'fs';
 import ErrnoException = NodeJS.ErrnoException;
 import { bold, red, green, yellow } from 'chalk';
 import { CONSTANSTS } from './constants';
+import { copySet } from './ui-tasks/copy';
 
 const stringUtils = require( 'ember-cli-string-utils' );
 const gulp = require( 'gulp' );
@@ -29,6 +30,7 @@ if ( state.canProcess ) {
   process.chdir( args.gulp.cwd );
 
   const cliTasks: ICLITasks = parseCLIJson( args );
+  let filePath: string;
 
   if ( state.template ) {
 
@@ -40,23 +42,23 @@ if ( state.canProcess ) {
     let content = CONSTANSTS.GENERATE_MSG + '\n';
     content += '// Paths are relative to root app directory where index.html is served.\n';
     content += 'export const svgAssets: any = {\n';
-    cliTasks.svg.sets.forEach( ( iconSet: Isvg ) => {
+    cliTasks.svg.sets.forEach( ( svgSet: Isvg ) => {
 
       const filepath = normalize(
-        join( iconSet.outDir, iconSet.setName ),
-      ) + '-' + iconSet.version + '.svg';
+        join( svgSet.outDir, svgSet.setName ),
+      ) + '-' + svgSet.version + '.svg';
 
-      let propAndValue = '  ' + stringUtils.underscore( iconSet.setName ).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
+      let propAndValue = '  ' + stringUtils.underscore( svgSet.setName ).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
       propAndValue = propAndValue.replace('\/\/', '\/');
       content += propAndValue;
 
 
-      processIconSet( JSON.parse( JSON.stringify( iconSet ) ), cliTasks );
+      processIconSet( JSON.parse( JSON.stringify( svgSet ) ), cliTasks );
     } );
 
     content += '};\n';
 
-    const filePath: string = join( cliTasks.relativeToProjectRoot, cliTasks.svg.tsReference );
+    filePath = join( cliTasks.relativeToProjectRoot, cliTasks.svg.tsReference );
 
     mkdirp( dirname(filePath), function ( err: any ) {
       if ( err ) {
@@ -74,6 +76,13 @@ if ( state.canProcess ) {
       }
     } );
 
+  }
+
+  if ( state.copy ) {
+    console.log( '\n' );
+    cliTasks.copy.sets.forEach( ( copy: Isvg ) => {
+      copySet( JSON.parse( JSON.stringify( copy ) ), cliTasks );
+    } );
   }
 
 }

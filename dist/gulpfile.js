@@ -14,6 +14,7 @@ var path_1 = require("path");
 var fs_1 = require("fs");
 var chalk_1 = require("chalk");
 var constants_1 = require("./constants");
+var copy_1 = require("./ui-tasks/copy");
 var stringUtils = require('ember-cli-string-utils');
 var gulp = require('gulp');
 var mkdirp = require('mkdirp');
@@ -25,6 +26,7 @@ if (state.canProcess) {
      */
     process.chdir(args.gulp.cwd);
     var cliTasks_1 = parse_cli_json_1.parseCLIJson(args);
+    var filePath_1;
     if (state.template) {
         gulp.start(args.gulp.task);
     }
@@ -32,15 +34,15 @@ if (state.canProcess) {
         var content_1 = constants_1.CONSTANSTS.GENERATE_MSG + '\n';
         content_1 += '// Paths are relative to root app directory where index.html is served.\n';
         content_1 += 'export const svgAssets: any = {\n';
-        cliTasks_1.svg.sets.forEach(function (iconSet) {
-            var filepath = path_1.normalize(path_1.join(iconSet.outDir, iconSet.setName)) + '-' + iconSet.version + '.svg';
-            var propAndValue = '  ' + stringUtils.underscore(iconSet.setName).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
+        cliTasks_1.svg.sets.forEach(function (svgSet) {
+            var filepath = path_1.normalize(path_1.join(svgSet.outDir, svgSet.setName)) + '-' + svgSet.version + '.svg';
+            var propAndValue = '  ' + stringUtils.underscore(svgSet.setName).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
             propAndValue = propAndValue.replace('\/\/', '\/');
             content_1 += propAndValue;
-            svg_icons_1.processIconSet(JSON.parse(JSON.stringify(iconSet)), cliTasks_1);
+            svg_icons_1.processIconSet(JSON.parse(JSON.stringify(svgSet)), cliTasks_1);
         });
         content_1 += '};\n';
-        var filePath_1 = path_1.join(cliTasks_1.relativeToProjectRoot, cliTasks_1.svg.tsReference);
+        filePath_1 = path_1.join(cliTasks_1.relativeToProjectRoot, cliTasks_1.svg.tsReference);
         mkdirp(path_1.dirname(filePath_1), function (err) {
             if (err) {
                 console.error(err);
@@ -55,6 +57,12 @@ if (state.canProcess) {
                     console.log('\n');
                 });
             }
+        });
+    }
+    if (state.copy) {
+        console.log('\n');
+        cliTasks_1.copy.sets.forEach(function (copy) {
+            copy_1.copySet(JSON.parse(JSON.stringify(copy)), cliTasks_1);
         });
     }
 }

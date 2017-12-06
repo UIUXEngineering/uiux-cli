@@ -10,6 +10,7 @@ var processState = {
     canProcess: false,
     template: false,
     svg: false,
+    copy: false,
 };
 var args = {
     template: '',
@@ -60,6 +61,12 @@ function parseArgs() {
             processState.svg = true;
             args.gulp.cwd = path_1.resolve(__dirname, '../', '../');
             args.gulp.task = 'svg-icons';
+        }
+        else if (argList.indexOf('copy') !== -1) {
+            processState.canProcess = true;
+            processState.copy = true;
+            args.gulp.cwd = path_1.resolve(__dirname, '../', '../');
+            args.gulp.task = 'copy';
         }
         else {
             console.error("" + chalk_1.bold(chalk_1.red('No Params Provided')));

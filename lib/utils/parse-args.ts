@@ -10,12 +10,14 @@ export interface IProcessState {
   canProcess: boolean;
   template: boolean;
   svg: boolean;
+  copy: boolean;
 }
 
 let processState = {
   canProcess: false,
   template: false,
   svg: false,
+  copy: false,
 };
 
 export interface IArgs {
@@ -111,6 +113,11 @@ export function parseArgs(): IProcessState {
       processState.svg = true;
       args.gulp.cwd = resolve(__dirname, '../', '../');
       args.gulp.task = 'svg-icons';
+    } else if (argList.indexOf('copy') !== -1 ) {
+      processState.canProcess = true;
+      processState.copy = true;
+      args.gulp.cwd = resolve(__dirname, '../', '../');
+      args.gulp.task = 'copy';
     } else {
       console.error(`${bold(red('No Params Provided'))}`);
     }
