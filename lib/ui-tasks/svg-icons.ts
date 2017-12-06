@@ -1,13 +1,13 @@
 import { task, src, dest } from 'gulp';
 import { bold, red, green, yellow } from 'chalk';
 import { join, normalize } from 'path';
-import { ICLITasks, ISVGIcons } from '../utils/parse-cli-json';
+import { ICLITasks, Isvg } from '../utils/parse-cli-json';
 
 const gulpCheerio = require( 'gulp-cheerio' );
 const gulpMdSvgstore = require( 'gulp-md-svgstore' );
 let gulp = require('gulp');
 
-export function processIconSet( iconSet: ISVGIcons, cliTasks: ICLITasks ): void {
+export function processIconSet( iconSet: Isvg, cliTasks: ICLITasks ): void {
   console.log('\n');
   console.log(yellow(`    set: ${join(iconSet.outDir, iconSet.setName) + `-` + iconSet.version + `.svg`}`));
   // Create files paths for gulp

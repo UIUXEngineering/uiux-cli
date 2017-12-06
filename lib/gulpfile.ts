@@ -5,13 +5,14 @@
  * to run node or bash files directly.
  */
 import { getArgs, IArgs, IProcessState, parseArgs } from './utils/parse-args';
-import { ICLITasks, ISVGIcons, parseCLIJson } from './utils/parse-cli-json';
+import { ICLITasks, Isvg, parseCLIJson } from './utils/parse-cli-json';
 import { processIconSet } from './ui-tasks/svg-icons';
 import './ui-tasks/generate';
 import { dirname, join, normalize } from 'path';
 import { writeFile } from 'fs';
 import ErrnoException = NodeJS.ErrnoException;
 import { bold, red, green, yellow } from 'chalk';
+import { CONSTANSTS } from './constants';
 
 const stringUtils = require( 'ember-cli-string-utils' );
 const gulp = require( 'gulp' );
@@ -36,9 +37,10 @@ if ( state.canProcess ) {
 
   if ( state.svg ) {
 
-    let content = '// Paths are relative to root app directory where index.html is served.\n';
-    content += 'export const svgIconSets: any = {\n';
-    cliTasks.svgIcons.sets.forEach( ( iconSet: ISVGIcons ) => {
+    let content = CONSTANSTS.GENERATE_MSG + '\n';
+    content += '// Paths are relative to root app directory where index.html is served.\n';
+    content += 'export const svgAssets: any = {\n';
+    cliTasks.svg.sets.forEach( ( iconSet: Isvg ) => {
 
       const filepath = normalize(
         join( iconSet.outDir, iconSet.setName ),
@@ -54,7 +56,7 @@ if ( state.canProcess ) {
 
     content += '};\n';
 
-    const filePath: string = join( cliTasks.relativeToProjectRoot, cliTasks.svgIcons.tsReference );
+    const filePath: string = join( cliTasks.relativeToProjectRoot, cliTasks.svg.tsReference );
 
     mkdirp( dirname(filePath), function ( err: any ) {
       if ( err ) {
@@ -66,7 +68,7 @@ if ( state.canProcess ) {
           }
 
           console.log( '\n' );
-          console.log(yellow(`    reference: ${cliTasks.svgIcons.tsReference}`));
+          console.log(yellow(`    reference: ${cliTasks.svg.tsReference}`));
           console.log( '\n' );
         } );
       }

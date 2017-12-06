@@ -1,5 +1,4 @@
-import { mkdir, } from 'fs';
-import { dirname, join, relative, resolve } from 'path';
+import { join, relative, resolve } from 'path';
 import { IArgs } from './parse-args';
 import { CONSTANSTS } from '../constants';
 
@@ -13,7 +12,7 @@ let processState = {
   canProcess: false,
 };
 
-export interface ISVGIcons {
+export interface Isvg {
   srcDir: string;
   gulpSrc: string[];
   srcFiles: {
@@ -26,15 +25,15 @@ export interface ISVGIcons {
 
 export interface ICLITasks {
   relativeToProjectRoot: string;
-  svgIcons: {
+  svg: {
     tsReference: string;
-    sets: ISVGIcons[]
+    sets: Isvg[]
   };
 }
 
 let cliTasks: ICLITasks = {
   relativeToProjectRoot: '',
-  svgIcons: {
+  svg: {
     tsReference: 'src/environment/svgAssets.ts',
     sets: [],
   },
@@ -52,14 +51,14 @@ export function parseCLIJson( args: IArgs ): ICLITasks {
 
   let cliFile: ICLITasks = require( join( relative( resolve( __dirname ), destProjectRootPath ), CONSTANSTS.CLI_NAME ) );
 
-  if ( cliFile[ 'svgIcons' ] ) {
-    const iconConfigs: any = cliFile[ 'svgIcons' ];
+  if ( cliFile[ 'svg' ] ) {
+    const iconConfigs: any = cliFile[ 'svg' ];
 
-    iconConfigs.sets.forEach( ( config: ISVGIcons ) => {
-      cliTasks.svgIcons.sets.push( config );
+    iconConfigs.sets.forEach( ( config: Isvg ) => {
+      cliTasks.svg.sets.push( config );
     } );
 
-    cliTasks.svgIcons.tsReference = cliFile.svgIcons.tsReference;
+    cliTasks.svg.tsReference = cliFile.svg.tsReference;
   }
 
   return cliTasks;

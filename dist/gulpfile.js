@@ -13,6 +13,7 @@ require("./ui-tasks/generate");
 var path_1 = require("path");
 var fs_1 = require("fs");
 var chalk_1 = require("chalk");
+var constants_1 = require("./constants");
 var stringUtils = require('ember-cli-string-utils');
 var gulp = require('gulp');
 var mkdirp = require('mkdirp');
@@ -28,9 +29,10 @@ if (state.canProcess) {
         gulp.start(args.gulp.task);
     }
     if (state.svg) {
-        var content_1 = '// Paths are relative to root app directory where index.html is served.\n';
-        content_1 += 'export const svgIconSets: any = {\n';
-        cliTasks_1.svgIcons.sets.forEach(function (iconSet) {
+        var content_1 = constants_1.CONSTANSTS.GENERATE_MSG + '\n';
+        content_1 += '// Paths are relative to root app directory where index.html is served.\n';
+        content_1 += 'export const svgAssets: any = {\n';
+        cliTasks_1.svg.sets.forEach(function (iconSet) {
             var filepath = path_1.normalize(path_1.join(iconSet.outDir, iconSet.setName)) + '-' + iconSet.version + '.svg';
             var propAndValue = '  ' + stringUtils.underscore(iconSet.setName).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
             propAndValue = propAndValue.replace('\/\/', '\/');
@@ -38,7 +40,7 @@ if (state.canProcess) {
             svg_icons_1.processIconSet(JSON.parse(JSON.stringify(iconSet)), cliTasks_1);
         });
         content_1 += '};\n';
-        var filePath_1 = path_1.join(cliTasks_1.relativeToProjectRoot, cliTasks_1.svgIcons.tsReference);
+        var filePath_1 = path_1.join(cliTasks_1.relativeToProjectRoot, cliTasks_1.svg.tsReference);
         mkdirp(path_1.dirname(filePath_1), function (err) {
             if (err) {
                 console.error(err);
@@ -49,7 +51,7 @@ if (state.canProcess) {
                         return console.log(err);
                     }
                     console.log('\n');
-                    console.log(chalk_1.yellow("    reference: " + cliTasks_1.svgIcons.tsReference));
+                    console.log(chalk_1.yellow("    reference: " + cliTasks_1.svg.tsReference));
                     console.log('\n');
                 });
             }
