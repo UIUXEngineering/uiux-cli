@@ -14,6 +14,7 @@ var processState = {
 var args = {
     template: '',
     templateVars: {},
+    processCwd: '',
     gulp: {
         task: '',
         srcBase: '',
@@ -43,6 +44,7 @@ function getArgs() {
 exports.getArgs = getArgs;
 function parseArgs() {
     var argList = process.argv;
+    args.processCwd = process.cwd();
     if (argList) {
         if (argList.indexOf('--version') !== -1) {
             var pkg = require('../../package.json');
