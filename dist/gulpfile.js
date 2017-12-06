@@ -12,6 +12,7 @@ var svg_icons_1 = require("./ui-tasks/svg-icons");
 require("./ui-tasks/generate");
 var path_1 = require("path");
 var fs_1 = require("fs");
+var chalk_1 = require("chalk");
 var stringUtils = require('ember-cli-string-utils');
 var gulp = require('gulp');
 var mkdirp = require('mkdirp');
@@ -27,12 +28,13 @@ if (state.canProcess) {
         gulp.start(args.gulp.task);
     }
     if (state.svg) {
-        var svgAssetsContent = '';
-        var content_1 = 'export const svgIconSets: any = {\n';
+        var content_1 = '// Paths are relative to root app directory where index.html is served.\n';
+        content_1 += 'export const svgIconSets: any = {\n';
         cliTasks_1.svgIcons.sets.forEach(function (iconSet) {
             var filepath = path_1.normalize(path_1.join(iconSet.outDir, iconSet.setName)) + '-' + iconSet.version + '.svg';
-            content_1 += '  ' + stringUtils.underscore(iconSet.setName).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
-            // variable += iconSet.setName.up
+            var propAndValue = '  ' + stringUtils.underscore(iconSet.setName).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
+            propAndValue = propAndValue.replace('\/\/', '\/');
+            content_1 += propAndValue;
             svg_icons_1.processIconSet(JSON.parse(JSON.stringify(iconSet)), cliTasks_1);
         });
         content_1 += '};\n';
@@ -46,7 +48,9 @@ if (state.canProcess) {
                     if (err) {
                         return console.log(err);
                     }
-                    console.log('assets saved!');
+                    console.log('\n');
+                    console.log(chalk_1.yellow("    reference: " + filePath_1));
+                    console.log('\n');
                 });
             }
         });

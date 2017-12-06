@@ -1,5 +1,5 @@
 import { task, src, dest } from 'gulp';
-
+import { bold, red, green, yellow } from 'chalk';
 import { join, normalize } from 'path';
 import { ICLITasks, ISVGIcons } from '../utils/parse-cli-json';
 
@@ -8,8 +8,8 @@ const gulpMdSvgstore = require( 'gulp-md-svgstore' );
 let gulp = require('gulp');
 
 export function processIconSet( iconSet: ISVGIcons, cliTasks: ICLITasks ): void {
-
-
+  console.log('\n');
+  console.log(yellow(`    set: ${join(iconSet.outDir, iconSet.setName) + `-` + iconSet.version + `.svg`}`));
   // Create files paths for gulp
   let iconTree: { [ key: string ]: any } = {};
   let srcPaths: string [] = Object.keys( iconSet.srcFiles );
@@ -24,6 +24,7 @@ export function processIconSet( iconSet: ISVGIcons, cliTasks: ICLITasks ): void 
         iconTree[ fileName ] = iconSet.srcFiles[ _pathItem ][ fileName ];
 
         const _path = normalize(  join( cliTasks.relativeToProjectRoot, _pathItem, fileName ) );
+        console.log(green(`    includes: ${join( _pathItem, fileName )}`));
         _acc.push( _path );
         return _acc;
       }, [] );

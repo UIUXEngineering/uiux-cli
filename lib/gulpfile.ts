@@ -11,6 +11,7 @@ import './ui-tasks/generate';
 import { dirname, join, normalize } from 'path';
 import { writeFile } from 'fs';
 import ErrnoException = NodeJS.ErrnoException;
+import { bold, red, green, yellow } from 'chalk';
 
 const stringUtils = require( 'ember-cli-string-utils' );
 const gulp = require( 'gulp' );
@@ -35,17 +36,19 @@ if ( state.canProcess ) {
 
   if ( state.svg ) {
 
-    let svgAssetsContent = '';
-    let content = 'export const svgIconSets: any = {\n';
+    let content = '// Paths are relative to root app directory where index.html is served.\n';
+    content += 'export const svgIconSets: any = {\n';
     cliTasks.svgIcons.sets.forEach( ( iconSet: ISVGIcons ) => {
 
       const filepath = normalize(
         join( iconSet.outDir, iconSet.setName ),
       ) + '-' + iconSet.version + '.svg';
 
-      content += '  ' + stringUtils.underscore( iconSet.setName ).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
+      let propAndValue = '  ' + stringUtils.underscore( iconSet.setName ).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
+      propAndValue = propAndValue.replace('\/\/', '\/');
+      content += propAndValue;
 
-      // variable += iconSet.setName.up
+
       processIconSet( JSON.parse( JSON.stringify( iconSet ) ), cliTasks );
     } );
 
@@ -62,7 +65,9 @@ if ( state.canProcess ) {
             return console.log( err );
           }
 
-          console.log( 'assets saved!' );
+          console.log( '\n' );
+          console.log(yellow(`    reference: ${filePath}`));
+          console.log( '\n' );
         } );
       }
     } );
