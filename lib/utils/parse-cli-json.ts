@@ -1,6 +1,6 @@
-import { existsSync, lstatSync, statSync, } from 'fs';
-import { error } from 'util';
-import { join, relative, resolve } from 'path';
+import { mkdir, } from 'fs';
+import { dirname, join, relative, resolve } from 'path';
+import { IArgs } from './parse-args';
 
 const stringUtils = require( 'ember-cli-string-utils' );
 
@@ -24,6 +24,7 @@ export interface ISVGIcons {
 }
 
 export interface ICLITasks {
+  relativeToProjectRoot: string;
   svgIcons: {
     tsReference: string;
     sets: ISVGIcons[]
@@ -31,6 +32,7 @@ export interface ICLITasks {
 }
 
 let cliTasks: ICLITasks = {
+  relativeToProjectRoot: '',
   svgIcons: {
     tsReference: 'src/environment/svgAssets.ts',
     sets: [],
@@ -41,15 +43,13 @@ export function getCliTasks(): ICLITasks {
   return cliTasks;
 }
 
-export function parseCLIJson(): ICLITasks {
-  const cwd = resolve( __dirname, '../', '../' );
-  const destProjectRootPath: string = relative( cwd, process.cwd() );
-  let cliFile: ICLITasks;
-  if ( destProjectRootPath.length ) {
-    cliFile = require( join( destProjectRootPath, '.ix-cli.json' ) );
-  } else {
-    cliFile = require( join( cwd, '.ix-cli.json' ) );
-  }
+export function parseCLIJson( args: IArgs ): ICLITasks {
+
+  const destProjectRootPath: string = relative( args.gulp.cwd, args.processCwd ) || '';
+
+  cliTasks.relativeToProjectRoot = relative( resolve( __dirname, '../', '../' ), destProjectRootPath );
+
+  let cliFile: ICLITasks = require( join( relative( resolve( __dirname ), destProjectRootPath ), '.sp-cli.json' ) );
 
   if ( cliFile[ 'svgIcons' ] ) {
     const iconConfigs: any = cliFile[ 'svgIcons' ];
@@ -62,34 +62,6 @@ export function parseCLIJson(): ICLITasks {
   }
 
   return cliTasks;
-}
-
-function isFile( file: any ) {
-  let stats: any, method: Function;
-
-  if ( lstatSync ) {
-    method = lstatSync; // node 2015
-  } else if ( lstatSync ) {
-    method = existsSync; // node 2012
-  } else if ( existsSync ) {
-    method = statSync; // node 2010
-  } else {
-    method = () => { /* noop */
-    };
-  }
-
-  try {
-    // Query the entry
-    stats = method( file );
-  } catch ( e ) {
-    console.log( error( 'ERROR: file does not exist: ' + file ) );
-  }
-
-  if ( existsSync ) {
-    return stats;
-  } else {
-    return stats.isFile();
-  }
 }
 
 

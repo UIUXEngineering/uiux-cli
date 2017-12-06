@@ -8,12 +8,13 @@ import { getArgs, IArgs, IProcessState, parseArgs } from './utils/parse-args';
 import { ICLITasks, ISVGIcons, parseCLIJson } from './utils/parse-cli-json';
 import { processIconSet } from './ui-tasks/svg-icons';
 import './ui-tasks/generate';
-import { join, normalize } from 'path';
+import { dirname, join, normalize } from 'path';
 import { writeFile } from 'fs';
 import ErrnoException = NodeJS.ErrnoException;
 
 const stringUtils = require( 'ember-cli-string-utils' );
 const gulp = require( 'gulp' );
+const mkdirp = require( 'mkdirp' );
 
 let state: IProcessState = parseArgs();
 const args: IArgs = getArgs();
@@ -25,38 +26,46 @@ if ( state.canProcess ) {
    */
   process.chdir( args.gulp.cwd );
 
-  const cliTasks: ICLITasks = parseCLIJson();
+  const cliTasks: ICLITasks = parseCLIJson( args );
 
   if ( state.template ) {
+
     gulp.start( args.gulp.task );
   }
 
   if ( state.svg ) {
 
     let svgAssetsContent = '';
-    let content = 'export const svgSets: any = {\n';
+    let content = 'export const svgIconSets: any = {\n';
     cliTasks.svgIcons.sets.forEach( ( iconSet: ISVGIcons ) => {
 
       const filepath = normalize(
         join( iconSet.outDir, iconSet.setName ),
       ) + '-' + iconSet.version + '.svg';
 
-      content += '  ' + stringUtils.underscore( iconSet.setName ).toUpperCase() + ': \'/' + filepath + '\',\n';
+      content += '  ' + stringUtils.underscore( iconSet.setName ).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
 
       // variable += iconSet.setName.up
-      processIconSet( iconSet );
+      processIconSet( JSON.parse( JSON.stringify( iconSet ) ), cliTasks );
     } );
 
     content += '};\n';
 
-    writeFile( cliTasks.svgIcons.tsReference, content, ( err: ErrnoException ) => {
+    const filePath: string = join( cliTasks.relativeToProjectRoot, cliTasks.svgIcons.tsReference );
+
+    mkdirp( dirname(filePath), function ( err: any ) {
       if ( err ) {
-        return console.log( err );
+        console.error( err );
+      } else {
+        writeFile( filePath, content, ( err: ErrnoException ) => {
+          if ( err ) {
+            return console.log( err );
+          }
+
+          console.log( 'assets saved!' );
+        } );
       }
-
-      console.log( 'assets saved!' );
     } );
-
 
   }
 

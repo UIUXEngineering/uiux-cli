@@ -30,6 +30,7 @@ export interface IArgs {
     specFilename?: string;
   };
   gulp: IGulpParams;
+  processCwd: string;
 }
 
 export interface IGulpParams {
@@ -62,7 +63,7 @@ let args: IArgs = {
   templateVars: {
 
   },
-
+  processCwd: '',
   gulp: {
     task: '',
     srcBase: '',
@@ -94,6 +95,8 @@ export function getArgs(): IArgs {
 
 export function parseArgs(): IProcessState {
   let argList: string[] = process.argv;
+
+  args.processCwd = process.cwd();
 
   if ( argList ) {
     if ( argList.indexOf('--version') !== -1 ) {

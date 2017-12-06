@@ -1,13 +1,13 @@
 import { task, src, dest } from 'gulp';
 
 import { join, normalize } from 'path';
-import { ISVGIcons } from '../utils/parse-cli-json';
+import { ICLITasks, ISVGIcons } from '../utils/parse-cli-json';
 
 const gulpCheerio = require( 'gulp-cheerio' );
 const gulpMdSvgstore = require( 'gulp-md-svgstore' );
 let gulp = require('gulp');
 
-export function processIconSet( iconSet: ISVGIcons ): void {
+export function processIconSet( iconSet: ISVGIcons, cliTasks: ICLITasks ): void {
 
 
   // Create files paths for gulp
@@ -23,7 +23,7 @@ export function processIconSet( iconSet: ISVGIcons ): void {
 
         iconTree[ fileName ] = iconSet.srcFiles[ _pathItem ][ fileName ];
 
-        const _path = normalize( join( _pathItem, fileName ) );
+        const _path = normalize(  join( cliTasks.relativeToProjectRoot, _pathItem, fileName ) );
         _acc.push( _path );
         return _acc;
       }, [] );
@@ -60,7 +60,7 @@ export function processIconSet( iconSet: ISVGIcons ): void {
         // inlineSvg remove xmls meta
         inlineSvg: true,
       } ) )
-      .pipe( dest( iconSet.outDir ) );
+      .pipe( dest( join(cliTasks.relativeToProjectRoot, iconSet.outDir )) );
   } );
 
   gulp.start('svg-icons');
