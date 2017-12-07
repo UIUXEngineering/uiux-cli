@@ -25,8 +25,8 @@ function processIconSet(iconSet, cliTasks) {
         acc = acc.concat(fileNames);
         return acc;
     }, []);
-    gulp_1.task('svg-icons', function () {
-        return gulp_1.src(filePaths)
+    gulp_1.task('svg-icons', function (done) {
+        var stream = gulp_1.src(filePaths)
             .pipe(gulpCheerio({
             run: function ($, file) {
                 var fileConfig = iconTree[file.relative];
@@ -35,8 +35,8 @@ function processIconSet(iconSet, cliTasks) {
                 }
             },
             parserOptions: {
-                xmlMode: true,
-            },
+                xmlMode: true
+            }
         }))
             .pipe(gulpMdSvgstore({
             // name of result svg
@@ -44,9 +44,15 @@ function processIconSet(iconSet, cliTasks) {
             // keep id's set in each file
             keepIds: true,
             // inlineSvg remove xmls meta
-            inlineSvg: true,
+            inlineSvg: true
         }))
             .pipe(gulp_1.dest(path_1.join(cliTasks.relativeToProjectRoot, iconSet.outDir)));
+        stream.on('end', function () {
+            console.log(chalk_1.magenta("    finished: " + (path_1.join(iconSet.outDir, iconSet.setName) + "-" + iconSet.version + ".svg")));
+        });
+        stream.on('end', function (error) {
+            done(error);
+        });
     });
     gulp.start('svg-icons');
 }

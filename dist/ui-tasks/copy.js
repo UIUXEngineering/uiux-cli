@@ -21,9 +21,15 @@ function copySet(copySet, cliTasks) {
     }, []);
     console.log(chalk_1.yellow("    dest: " + copySet.outDir));
     console.log('\n');
-    gulp_1.task('copy', function () {
-        return gulp_1.src(filePaths)
+    gulp_1.task('copy', function (done) {
+        var stream = gulp_1.src(filePaths)
             .pipe(gulp_1.dest(path_1.join(cliTasks.relativeToProjectRoot, copySet.outDir)));
+        stream.on('end', function () {
+            console.log(chalk_1.magenta("    finished: " + copySet.outDir));
+        });
+        stream.on('end', function (error) {
+            done(error);
+        });
     });
     gulp.start('copy');
 }
