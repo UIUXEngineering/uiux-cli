@@ -1,6 +1,6 @@
 {
   "name": "@uiux/cli",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
