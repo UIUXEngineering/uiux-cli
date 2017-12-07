@@ -1,5 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var chalk_1 = require("chalk");
+var fs_1 = require("fs");
+var path_1 = require("path");
+var constants_1 = require("./constants");
+var copy_1 = require("./ui-tasks/copy");
+require("./ui-tasks/generate");
+var svg_icons_1 = require("./ui-tasks/svg-icons");
 /**
  * This file is only for scaffolding to place
  * conditions if you do not want to directly
@@ -8,13 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var parse_args_1 = require("./utils/parse-args");
 var parse_cli_json_1 = require("./utils/parse-cli-json");
-var svg_icons_1 = require("./ui-tasks/svg-icons");
-require("./ui-tasks/generate");
-var path_1 = require("path");
-var fs_1 = require("fs");
-var chalk_1 = require("chalk");
-var constants_1 = require("./constants");
-var copy_1 = require("./ui-tasks/copy");
 var stringUtils = require('ember-cli-string-utils');
 var gulp = require('gulp');
 var mkdirp = require('mkdirp');
@@ -36,7 +36,10 @@ if (state.canProcess) {
         content_1 += 'export const svgAssets: any = {\n';
         cliTasks_1.svg.sets.forEach(function (svgSet) {
             var filepath = path_1.normalize(path_1.join(svgSet.outDir, svgSet.setName)) + '-' + svgSet.version + '.svg';
-            var propAndValue = '  ' + stringUtils.underscore(svgSet.setName).toUpperCase() + ': \'/' + filepath.substr(4) + '\',\n';
+            var propAndValue = '  ' +
+                stringUtils.underscore(svgSet.setName).toUpperCase() +
+                ': \'' + filepath.split('/').slice(1).join('/') +
+                '\',\n';
             propAndValue = propAndValue.replace('\/\/', '\/');
             content_1 += propAndValue;
             svg_icons_1.processIconSet(JSON.parse(JSON.stringify(svgSet)), cliTasks_1);
