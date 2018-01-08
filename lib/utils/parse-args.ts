@@ -44,6 +44,7 @@ export interface IGulpParams {
   srcSpec: string;
   cwd: string;
   dest: string;
+  copyItems?: string[];
   renameBase: IGulpRename;
   renameModule: IGulpRename;
   renameTheme: IGulpRename;
@@ -74,6 +75,7 @@ let args: IArgs = {
     srcTheme: '',
     srcSpec: '',
     cwd: '',
+    copyItems: [],
     dest: '',
     renameBase: {
       basename: '',
@@ -100,24 +102,30 @@ export function parseArgs(): IProcessState {
 
   args.processCwd = process.cwd();
 
-  if ( argList ) {
+  const command: string = argList.slice(2, 3)[0];
+
+  if ( command ) {
     if ( argList.indexOf('--version') !== -1 ) {
       let pkg: any = require('../../package.json');
       console.log(pkg.version);
-    } else if ( argList.indexOf('g') !== -1 || argList.indexOf('generate') !== -1 ) {
+    } else if ( command === 'g' || command === 'generate' ) {
       processState.canProcess = true;
       processState.template = true;
       parseTemplateParams(argList);
-    } else if (argList.indexOf('svg') !== -1 ) {
+    } else if ( command === 'svg' ) {
       processState.canProcess = true;
       processState.svg = true;
       args.gulp.cwd = resolve(__dirname, '../', '../');
       args.gulp.task = 'svg-icons';
-    } else if (argList.indexOf('copy') !== -1 ) {
+    } else if ( command === 'copy' ) {
       processState.canProcess = true;
       processState.copy = true;
       args.gulp.cwd = resolve(__dirname, '../', '../');
       args.gulp.task = 'copy';
+      let copyItems: any = argList.slice(3);
+      if (copyItems && copyItems.length) {
+        args.gulp.copyItems = copyItems;
+      }
     } else {
       console.error(`${bold(red('No Params Provided'))}`);
     }

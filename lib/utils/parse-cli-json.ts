@@ -2,7 +2,7 @@ import { join, relative, resolve } from 'path';
 import { IArgs } from './parse-args';
 import { CONSTANSTS } from '../constants';
 
-const stringUtils = require( 'ember-cli-string-utils' );
+const stringUtils = require('ember-cli-string-utils');
 
 export interface IProcessState {
   canProcess: boolean;
@@ -24,6 +24,7 @@ export interface Isvg {
 }
 
 export interface ICopy {
+  id: string;
   outDir: string;
   srcFiles: {
     [ key: string ]: any
@@ -56,30 +57,41 @@ export function getCliTasks(): ICLITasks {
   return cliTasks;
 }
 
-export function parseCLIJson( args: IArgs ): ICLITasks {
+export function parseCLIJson(args: IArgs): ICLITasks {
 
-  const destProjectRootPath: string = relative( args.gulp.cwd, args.processCwd ) || '';
+  const destProjectRootPath: string = relative(args.gulp.cwd, args.processCwd) || '';
 
-  cliTasks.relativeToProjectRoot = relative( resolve( __dirname, '../', '../' ), destProjectRootPath );
+  cliTasks.relativeToProjectRoot = relative(resolve(__dirname, '../', '../'), destProjectRootPath);
 
-  let cliFile: ICLITasks = require( join( relative( resolve( __dirname ), destProjectRootPath ), CONSTANSTS.CLI_NAME ) );
+  let cliFile: ICLITasks = require(join(relative(resolve(__dirname), destProjectRootPath), CONSTANSTS.CLI_NAME));
 
-  if ( cliFile[ 'svg' ] ) {
-    const svgConfigs: any = cliFile[ 'svg' ];
+  if (cliFile['svg']) {
+    const svgConfigs: any = cliFile['svg'];
 
-    svgConfigs.sets.forEach( ( config: Isvg ) => {
-      cliTasks.svg.sets.push( config );
-    } );
+    svgConfigs.sets.forEach((config: Isvg) => {
+      cliTasks.svg.sets.push(config);
+    });
 
     cliTasks.svg.tsReference = cliFile.svg.tsReference;
   }
 
-  if ( cliFile[ 'copy' ] ) {
-    const svgConfigs: any = cliFile[ 'copy' ];
+  if (cliFile['copy']) {
+    const svgConfigs: any = cliFile['copy'];
+    const copyItems: string[] = args.gulp.copyItems || [];
+    svgConfigs.sets.forEach((config: ICopy) => {
+      if (config.id) {
+        if (copyItems && copyItems.length) {
+          if (copyItems.indexOf(config.id) !== -1) {
+            cliTasks.copy.sets.push(config);
+          }
+        } else {
+          cliTasks.copy.sets.push(config);
+        }
+      } else {
+        cliTasks.copy.sets.push(config);
+      }
 
-    svgConfigs.sets.forEach( ( config: Isvg ) => {
-      cliTasks.copy.sets.push( config );
-    } );
+    });
   }
 
   return cliTasks;

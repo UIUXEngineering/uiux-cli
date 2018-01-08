@@ -1,6 +1,6 @@
 {
   "name": "@uiux/cli",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
@@ -22,6 +22,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-template": "^4.0.0",
     "mkdirp": "^0.5.1",
+    "rmfr": "^1.0.7",
     "run-sequence": "^2.2.0"
   },
   "devDependencies": {

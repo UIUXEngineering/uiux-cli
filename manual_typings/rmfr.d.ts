@@ -1,6 +1,6 @@
 declare module 'rmfr' {
   function rmfr(path: string, options?: any): Promise<any>;
-  module rmfr {
+  namespace rmfr {
   }
   export = rmfr;
 }

@@ -65,7 +65,7 @@ if (state.canProcess) {
     if (state.copy) {
         console.log('\n');
         cliTasks_1.copy.sets.forEach(function (copy) {
-            copy_1.copySet(JSON.parse(JSON.stringify(copy)), cliTasks_1);
+            copy_1.copySetTask(JSON.parse(JSON.stringify(copy)), cliTasks_1);
         });
     }
 }

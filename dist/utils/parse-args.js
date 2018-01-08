@@ -24,6 +24,7 @@ var args = {
         srcTheme: '',
         srcSpec: '',
         cwd: '',
+        copyItems: [],
         dest: '',
         renameBase: {
             basename: '',
@@ -46,27 +47,32 @@ exports.getArgs = getArgs;
 function parseArgs() {
     var argList = process.argv;
     args.processCwd = process.cwd();
-    if (argList) {
+    var command = argList.slice(2, 3)[0];
+    if (command) {
         if (argList.indexOf('--version') !== -1) {
             var pkg = require('../../package.json');
             console.log(pkg.version);
         }
-        else if (argList.indexOf('g') !== -1 || argList.indexOf('generate') !== -1) {
+        else if (command === 'g' || command === 'generate') {
             processState.canProcess = true;
             processState.template = true;
             parseTemplateParams(argList);
         }
-        else if (argList.indexOf('svg') !== -1) {
+        else if (command === 'svg') {
             processState.canProcess = true;
             processState.svg = true;
             args.gulp.cwd = path_1.resolve(__dirname, '../', '../');
             args.gulp.task = 'svg-icons';
         }
-        else if (argList.indexOf('copy') !== -1) {
+        else if (command === 'copy') {
             processState.canProcess = true;
             processState.copy = true;
             args.gulp.cwd = path_1.resolve(__dirname, '../', '../');
             args.gulp.task = 'copy';
+            var copyItems = argList.slice(3);
+            if (copyItems && copyItems.length) {
+                args.gulp.copyItems = copyItems;
+            }
         }
         else {
             console.error("" + chalk_1.bold(chalk_1.red('No Params Provided')));

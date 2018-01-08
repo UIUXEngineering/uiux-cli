@@ -33,8 +33,21 @@ function parseCLIJson(args) {
     }
     if (cliFile['copy']) {
         var svgConfigs = cliFile['copy'];
+        var copyItems_1 = args.gulp.copyItems || [];
         svgConfigs.sets.forEach(function (config) {
-            cliTasks.copy.sets.push(config);
+            if (config.id) {
+                if (copyItems_1 && copyItems_1.length) {
+                    if (copyItems_1.indexOf(config.id) !== -1) {
+                        cliTasks.copy.sets.push(config);
+                    }
+                }
+                else {
+                    cliTasks.copy.sets.push(config);
+                }
+            }
+            else {
+                cliTasks.copy.sets.push(config);
+            }
         });
     }
     return cliTasks;

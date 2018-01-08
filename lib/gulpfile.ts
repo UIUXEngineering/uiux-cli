@@ -2,7 +2,7 @@ import { yellow } from 'chalk';
 import { writeFile } from 'fs';
 import { dirname, join, normalize } from 'path';
 import { CONSTANSTS } from './constants';
-import { copySet } from './ui-tasks/copy';
+import { copySetTask } from './ui-tasks/copy';
 import './ui-tasks/generate';
 import { processIconSet } from './ui-tasks/svg-icons';
 /**
@@ -12,7 +12,7 @@ import { processIconSet } from './ui-tasks/svg-icons';
  * to run node or bash files directly.
  */
 import { getArgs, IArgs, IProcessState, parseArgs } from './utils/parse-args';
-import { ICLITasks, Isvg, parseCLIJson } from './utils/parse-cli-json';
+import {ICLITasks, ICopy, Isvg, parseCLIJson} from './utils/parse-cli-json';
 import ErrnoException = NodeJS.ErrnoException;
 
 const stringUtils = require('ember-cli-string-utils');
@@ -84,8 +84,8 @@ if (state.canProcess) {
 
   if (state.copy) {
     console.log('\n');
-    cliTasks.copy.sets.forEach((copy: Isvg) => {
-      copySet(JSON.parse(JSON.stringify(copy)), cliTasks);
+    cliTasks.copy.sets.forEach((copy: ICopy) => {
+      copySetTask(JSON.parse(JSON.stringify(copy)), cliTasks);
     });
   }
 
