@@ -1,0 +1,89 @@
+{
+  "copy": {
+    "sets": [
+      {
+        "id": "firebase",
+        "outDir": "root/copy1/svg",
+        "srcFiles": {
+          "../design/icons/views/home": [
+            "ic_home_white_24px.svg",
+            "ic_settings_white_24px.svg"
+          ],
+          "../design/icons/views/login": [
+            "1512-google.svg",
+            "1520-facebook.svg",
+            "1526-twitter.svg"
+          ]
+        }
+      },
+      {
+        "id": "svg",
+        "outDir": "root/copy2/svg",
+        "srcFiles": {
+          "../design/icons/views/mixer": [
+            "**/*"
+          ]
+        }
+      }
+    ]
+  },
+  "svg": {
+    "tsReference": "root/svgIconAssets.ts",
+    "sets": [
+      {
+        "version": "v1",
+        "outDir": "root/assets/svg",
+        "setName": "home-icon-set",
+        "srcFiles": {
+          "../design/icons/views/home": {
+            "ic_home_white_24px.svg": {
+              "id": "home"
+            },
+            "ic_settings_white_24px.svg": {
+              "id": "settings"
+            },
+            "ic_menu_white_24px.svg": {
+              "id": "menu"
+            }
+          },
+          "../design/icons/views/login": {
+            "1512-google.svg": {
+              "id": "google"
+            },
+            "1520-facebook.svg": {
+              "id": "facebook"
+            },
+            "1526-twitter.svg": {
+              "id": "twittler"
+            }
+          }
+
+        }
+      },
+      {
+        "version": "v2",
+        "outDir": "root/assets/svg",
+        "setName": "admin-icon-set",
+        "srcFiles": {
+          "../design/icons/views/mixer": {
+            "ic_add_white_24px.svg": {
+              "id": "add"
+            },
+            "ic_album_white_24px.svg": {
+              "id": "album"
+            }
+          },
+          "../design/icons/views/progressStepper": {
+            "ic_brightness_1_white_24px.svg": {
+              "id": "bright"
+            },
+            "ic_radio_button_unchecked_white_24px.svg": {
+              "id": "radio"
+            }
+          }
+
+        }
+      }
+    ]
+  }
+}

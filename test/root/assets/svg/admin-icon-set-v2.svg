@@ -1,0 +1,14 @@
+<svg><defs><svg id="add" filename="ic_add_white_24px.svg" viewBox="0 0 24 24" width="24" height="24">
+    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg><svg id="album" filename="ic_album_white_24px.svg" viewBox="0 0 24 24" width="24" height="24">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-5.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"/>
+</svg><svg id="bright" filename="ic_brightness_1_white_24px.svg" viewBox="0 0 24 24" width="24" height="24">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg><svg id="radio" filename="ic_radio_button_unchecked_white_24px.svg" viewBox="0 0 24 24" width="24" height="24">
+    <circle class="center-fill" fill="#000000" cx="12" cy="12" r="10"/>
+    <path fill="#FFFFFF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg></defs></svg>
