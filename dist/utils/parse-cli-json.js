@@ -7,11 +7,11 @@ var processState = {
     canProcess: false,
 };
 var cliTasks = {
-    relativeToProjectRoot: '',
-    svg: {
-        tsReference: 'src/environment/svgAssets.ts',
-        sets: [],
-    },
+    svg: [{
+            relativeToProjectRoot: '',
+            tsReference: 'src/environment/svgAssets.ts',
+            sets: [],
+        }],
     copy: {
         sets: [],
     }
@@ -22,14 +22,17 @@ function getCliTasks() {
 exports.getCliTasks = getCliTasks;
 function parseCLIJson(args) {
     var destProjectRootPath = path_1.relative(args.gulp.cwd, args.processCwd) || '';
-    cliTasks.relativeToProjectRoot = path_1.relative(path_1.resolve(__dirname, '../', '../'), destProjectRootPath);
+    var relativeToProjectRoot = path_1.relative(path_1.resolve(__dirname, '../', '../'), destProjectRootPath);
     var cliFile = require(path_1.join(path_1.relative(path_1.resolve(__dirname), destProjectRootPath), constants_1.CONSTANSTS.CLI_NAME));
     if (cliFile['svg']) {
-        var svgConfigs = cliFile['svg'];
-        svgConfigs.sets.forEach(function (config) {
-            cliTasks.svg.sets.push(config);
+        var svgConfigs_1 = cliFile['svg'];
+        svgConfigs_1.forEach(function (svgConfig, index) {
+            svgConfig.sets.forEach(function (_config) {
+                cliTasks.svg[index].sets.push(_config);
+                cliTasks.svg[index].relativeToProjectRoot = relativeToProjectRoot;
+                cliTasks.svg[index].tsReference = svgConfigs_1[index].tsReference;
+            });
         });
-        cliTasks.svg.tsReference = cliFile.svg.tsReference;
     }
     if (cliFile['copy']) {
         var svgConfigs = cliFile['copy'];

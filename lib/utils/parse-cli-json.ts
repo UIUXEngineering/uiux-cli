@@ -21,6 +21,7 @@ export interface Isvg {
   setName: string;
   version: string;
   outDir: string;
+  pathFromHTML: string;
 }
 
 export interface ICopy {
@@ -32,22 +33,23 @@ export interface ICopy {
 }
 
 export interface ICLITasks {
-  relativeToProjectRoot: string;
+
   svg: {
+    relativeToProjectRoot: string;
     tsReference: string;
     sets: Isvg[]
-  };
+  }[];
   copy: {
     sets: ICopy[]
-  },
+  };
 }
 
 let cliTasks: ICLITasks = {
-  relativeToProjectRoot: '',
-  svg: {
+  svg: [{
+    relativeToProjectRoot: '',
     tsReference: 'src/environment/svgAssets.ts',
     sets: [],
-  },
+  }],
   copy: {
     sets: [],
   }
@@ -61,18 +63,21 @@ export function parseCLIJson(args: IArgs): ICLITasks {
 
   const destProjectRootPath: string = relative(args.gulp.cwd, args.processCwd) || '';
 
-  cliTasks.relativeToProjectRoot = relative(resolve(__dirname, '../', '../'), destProjectRootPath);
+  const relativeToProjectRoot = relative(resolve(__dirname, '../', '../'), destProjectRootPath);
 
-  let cliFile: ICLITasks = require(join(relative(resolve(__dirname), destProjectRootPath), CONSTANSTS.CLI_NAME));
+  let cliFile: ICLITasks = require(join(relative(resolve(__dirname), destProjectRootPath),
+                                        CONSTANSTS.CLI_NAME));
 
   if (cliFile['svg']) {
     const svgConfigs: any = cliFile['svg'];
 
-    svgConfigs.sets.forEach((config: Isvg) => {
-      cliTasks.svg.sets.push(config);
+    (<any[]>svgConfigs).forEach((svgConfig: any, index: number) => {
+      svgConfig.sets.forEach((_config: Isvg) => {
+        cliTasks.svg[index].sets.push(_config);
+        cliTasks.svg[index].relativeToProjectRoot = relativeToProjectRoot;
+        cliTasks.svg[index].tsReference = svgConfigs[index].tsReference;
+      });
     });
-
-    cliTasks.svg.tsReference = cliFile.svg.tsReference;
   }
 
   if (cliFile['copy']) {

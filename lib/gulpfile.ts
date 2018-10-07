@@ -2,7 +2,6 @@ import { yellow } from 'chalk';
 import { writeFile } from 'fs';
 import { dirname, join, normalize } from 'path';
 import { CONSTANSTS } from './constants';
-import { copySetTask } from './ui-tasks/copy';
 import './ui-tasks/generate';
 import { processIconSet } from './ui-tasks/svg-icons';
 /**
@@ -39,56 +38,56 @@ if (state.canProcess) {
 
   if (state.svg) {
 
-    let content = CONSTANSTS.GENERATE_MSG + '\n';
-    content += '// Paths are relative to root app directory where index.html is served.\n';
-    content += 'export const svgAssets: any = {\n';
-    cliTasks.svg.sets.forEach((svgSet: Isvg) => {
+    // process apps
+    cliTasks.svg.forEach((svg: any) => {
 
-      const filepath = normalize(
-        join(svgSet.outDir, svgSet.setName)
-      ) + '-' + svgSet.version + '.svg';
+      let content = CONSTANSTS.GENERATE_MSG + '\n';
+      content += '// Paths are relative to root app directory where index.html is served.\n';
+      content += 'export const svgAssets: any = {\n';
 
-      let propAndValue = '  ' +
-        stringUtils.underscore(svgSet.setName).toUpperCase() +
-        ': \'' + filepath.split('/').slice(1).join('/') +
-        '\',\n';
+      // process sets
+      svg.sets.forEach((svgSet: Isvg) => {
 
-      propAndValue = propAndValue.replace('\/\/', '\/');
-      content += propAndValue;
+        const pathFromHTML = normalize(
+          join(svgSet.pathFromHTML, svgSet.setName)
+        ) + '-' + svgSet.version + '.svg';
+
+        let propAndValue = '  ' +
+          stringUtils.underscore(svgSet.setName).toUpperCase() +
+          // ': \'' + pathFromHTML.split('/').slice(1).join('/') +
+          ': \'' + pathFromHTML +
+          '\',\n';
+
+        propAndValue = propAndValue.replace('\/\/', '\/');
+        content += propAndValue;
 
 
-      processIconSet(JSON.parse(JSON.stringify(svgSet)), cliTasks);
+        processIconSet(JSON.parse(JSON.stringify(svgSet)), svg);
+      });
+
+      content += '};\n';
+
+      filePath = join(svg.relativeToProjectRoot, svg.tsReference);
+
+      mkdirp(dirname(filePath), function (err: any) {
+        if (err) {
+          console.error(err);
+        } else {
+          writeFile(filePath, content, (err: ErrnoException) => {
+            if (err) {
+              return console.log(err);
+            }
+
+            console.log('\n');
+            console.log(yellow(`    reference: ${svg.tsReference}`));
+            console.log('\n');
+          });
+        }
+      });
     });
 
-    content += '};\n';
-
-    filePath = join(cliTasks.relativeToProjectRoot, cliTasks.svg.tsReference);
-
-    mkdirp(dirname(filePath), function (err: any) {
-      if (err) {
-        console.error(err);
-      } else {
-        writeFile(filePath, content, (err: ErrnoException) => {
-          if (err) {
-            return console.log(err);
-          }
-
-          console.log('\n');
-          console.log(yellow(`    reference: ${cliTasks.svg.tsReference}`));
-          console.log('\n');
-        });
-      }
-    });
 
   }
-
-  if (state.copy) {
-    console.log('\n');
-    cliTasks.copy.sets.forEach((copy: ICopy) => {
-      copySetTask(JSON.parse(JSON.stringify(copy)), cliTasks);
-    });
-  }
-
 }
 
 

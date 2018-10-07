@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var gulp_1 = require("gulp");
 var chalk_1 = require("chalk");
+var gulp_1 = require("gulp");
 var path_1 = require("path");
 var gulpCheerio = require('gulp-cheerio');
 var gulpMdSvgstore = require('gulp-md-svgstore');

@@ -1,39 +1,13 @@
 {
-  "copy": {
-    "sets": [
-      {
-        "id": "firebase",
-        "outDir": "root/copy1/svg",
-        "srcFiles": {
-          "../design/icons/views/home": [
-            "ic_home_white_24px.svg",
-            "ic_settings_white_24px.svg"
-          ],
-          "../design/icons/views/login": [
-            "1512-google.svg",
-            "1520-facebook.svg",
-            "1526-twitter.svg"
-          ]
-        }
-      },
-      {
-        "id": "svg",
-        "outDir": "root/copy2/svg",
-        "srcFiles": {
-          "../design/icons/views/mixer": [
-            "**/*"
-          ]
-        }
-      }
-    ]
-  },
-  "svg": {
+  "svg": [{
     "tsReference": "root/svgIconAssets.ts",
     "sets": [
       {
-        "version": "v1",
+        "version": "v2",
         "outDir": "root/assets/svg",
         "setName": "home-icon-set",
+        "pathFromHTML": "assets/svg",
+        "nrwl": true,
         "srcFiles": {
           "../design/icons/views/home": {
             "ic_home_white_24px.svg": {
@@ -64,6 +38,7 @@
         "version": "v2",
         "outDir": "root/assets/svg",
         "setName": "admin-icon-set",
+        "pathFromHTML": "assets/svg",
         "srcFiles": {
           "../design/icons/views/mixer": {
             "ic_add_white_24px.svg": {
@@ -85,5 +60,5 @@
         }
       }
     ]
-  }
+  }]
 }
