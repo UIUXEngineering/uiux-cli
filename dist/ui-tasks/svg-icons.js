@@ -9,7 +9,8 @@ var gulpCheerio = require('gulp-cheerio');
 var gulpMdSvgstore = require('gulp-md-svgstore');
 function processIconSet(iconSet, cliTasks) {
     console.log('\n');
-    console.log(chalk_1.yellow("    set: " + (path_1.join(iconSet.outDir, iconSet.setName) + "-" + iconSet.version + ".svg")));
+    console.log(chalk_1.yellow("    set: " + (path_1.join(iconSet.outDir, iconSet.setName) +
+        "-" + iconSet.version + ".svg")));
     // Create files paths for gulp
     var iconTree = {};
     var srcPaths = Object.keys(iconSet.srcFiles);
@@ -19,9 +20,16 @@ function processIconSet(iconSet, cliTasks) {
             .reduce(function (_acc, fileName) {
             iconTree[fileName] = iconSet.srcFiles[_pathItem][fileName];
             var _path = path_1.normalize(path_1.join(cliTasks.relativeToProjectRoot, _pathItem, fileName));
-            console.log(chalk_1.green("    includes: " + path_1.join(_pathItem, fileName)));
-            _acc.push(_path);
-            return _acc;
+            var fileExists = fs_1.existsSync(_path);
+            if (fileExists) {
+                console.log(chalk_1.green("    includes: " + path_1.join(_pathItem, fileName)));
+                _acc.push(_path);
+                return _acc;
+            }
+            else {
+                console.log(chalk_1.red("    missing ( not included ): " + path_1.join(_pathItem, fileName)));
+                return _acc;
+            }
         }, []);
         acc = acc.concat(fileNames);
         return acc;
@@ -49,7 +57,8 @@ function processIconSet(iconSet, cliTasks) {
         }))
             .pipe(gulp_1.dest(path_1.join(cliTasks.relativeToProjectRoot, iconSet.outDir)));
         stream.on('end', function () {
-            console.log(chalk_1.magenta("    finished: " + (path_1.join(iconSet.outDir, iconSet.setName) + "-" + iconSet.version + ".svg")));
+            console.log(chalk_1.magenta("    finished: " + (path_1.join(iconSet.outDir, iconSet.setName) +
+                "-" + iconSet.version + ".svg")));
         });
         stream.on('end', function (error) {
             done(error);

@@ -1,6 +1,6 @@
-import { green, magenta, yellow } from 'chalk';
-import { readFile, writeFile } from 'fs';
-import { dest, src, task, series } from 'gulp';
+import { green, magenta, yellow, red } from 'chalk';
+import { existsSync, readFile, writeFile } from 'fs';
+import { dest, series, src, task } from 'gulp';
 // import * as gulp from 'gulp';
 import { join, normalize } from 'path';
 import { Isvg } from '../utils/parse-cli-json';
@@ -10,7 +10,8 @@ const gulpMdSvgstore = require('gulp-md-svgstore');
 
 export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
   console.log('\n');
-  console.log(yellow(`    set: ${join(iconSet.outDir, iconSet.setName) + `-` + iconSet.version + `.svg`}`));
+  console.log(yellow(`    set: ${join(iconSet.outDir, iconSet.setName) +
+  `-` + iconSet.version + `.svg`}`));
   // Create files paths for gulp
   let iconTree: { [ key: string ]: any } = {};
   let srcPaths: string [] = Object.keys(iconSet.srcFiles);
@@ -25,9 +26,19 @@ export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
         iconTree[ fileName ] = iconSet.srcFiles[ _pathItem ][ fileName ];
 
         const _path = normalize(join(cliTasks.relativeToProjectRoot, _pathItem, fileName));
-        console.log(green(`    includes: ${join(_pathItem, fileName)}`));
-        _acc.push(_path);
-        return _acc;
+
+        const fileExists = existsSync(_path);
+
+        if ( fileExists ) {
+          console.log(green(`    includes: ${join(_pathItem, fileName)}`));
+          _acc.push(_path);
+          return _acc;
+        } else {
+          console.log(red(`    missing ( not included ): ${join(_pathItem, fileName)}`));
+          return _acc;
+        }
+
+
       }, []);
 
     acc = acc.concat(fileNames);
@@ -64,7 +75,8 @@ export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
       .pipe(dest(join(cliTasks.relativeToProjectRoot, iconSet.outDir)));
 
     stream.on('end', () => {
-      console.log(magenta(`    finished: ${join(iconSet.outDir, iconSet.setName) + `-` + iconSet.version + `.svg`}`));
+      console.log(magenta(`    finished: ${join(iconSet.outDir, iconSet.setName) +
+      `-` + iconSet.version + `.svg`}`));
     });
 
     stream.on('end', ( error: any ) => {
@@ -74,7 +86,8 @@ export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
 
   task('ts-sprite', series('svg-icons', function ( done: any ) {
     const sourceSVGFileName: string = iconSet.setName + '-' + iconSet.version + '.svg';
-    const sourcePath: string = join(cliTasks.relativeToProjectRoot, iconSet.outDir, sourceSVGFileName);
+    const sourcePath: string = join(cliTasks.relativeToProjectRoot,
+                                    iconSet.outDir, sourceSVGFileName);
     const destTSFile: string = join(cliTasks.relativeToProjectRoot, iconSet.tsSpriteFilePath);
     readFile(sourcePath, ( err, data ) => {
       if ( err ) {
@@ -94,14 +107,14 @@ export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
 
 
   if ( iconSet.tsSpriteFilePath && iconSet.tsSpriteFilePath.length > 0 ) {
-    task('ts-sprite')((err: any) => {
-      if (err) {
+    task('ts-sprite')(( err: any ) => {
+      if ( err ) {
         console.error(err);
       }
     });
   } else {
-    task('svg-icons')((err: any) => {
-      if (err) {
+    task('svg-icons')(( err: any ) => {
+      if ( err ) {
         console.error(err);
       }
     });
