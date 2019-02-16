@@ -4,7 +4,6 @@ var chalk_1 = require("chalk");
 var fs_1 = require("fs");
 var path_1 = require("path");
 var constants_1 = require("./constants");
-require("./ui-tasks/generate");
 var svg_icons_1 = require("./ui-tasks/svg-icons");
 /**
  * This file is only for scaffolding to place

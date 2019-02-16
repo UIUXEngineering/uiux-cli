@@ -22,9 +22,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-template": "^4.0.0",
     "mkdirp": "^0.5.1",
-    "rmfr": "^1.0.7",
-    "run-sequence": "^2.2.0",
-    "vinyl-fs": "^3.0.3"
+    "rmfr": "^1.0.7"
   },
   "devDependencies": {
     "@types/chalk": "^0.4.31",

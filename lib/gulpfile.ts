@@ -2,7 +2,6 @@ import { yellow } from 'chalk';
 import { writeFile } from 'fs';
 import { dirname, join, normalize } from 'path';
 import { CONSTANSTS } from './constants';
-import './ui-tasks/generate';
 import { processIconSet } from './ui-tasks/svg-icons';
 /**
  * This file is only for scaffolding to place
