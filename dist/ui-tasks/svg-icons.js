@@ -74,7 +74,7 @@ function processIconSet(iconSet, cliTasks) {
             }
             var payload = '//tslint:disable \nexport const SVG_SPRITE: any = `' + data + '`;';
             fs_1.writeFile(destTSFile, payload, 'utf8', function () {
-                console.log(chalk_1.magenta("    TypeScript Sprite: " + destTSFile));
+                console.log(chalk_1.magenta("    TypeScript Sprite: " + iconSet.tsSpriteFilePath));
                 done();
             });
         });

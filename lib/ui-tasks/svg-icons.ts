@@ -96,7 +96,7 @@ export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
 
       const payload = '//tslint:disable \nexport const SVG_SPRITE: any = `' + data + '`;';
       writeFile(destTSFile, payload, 'utf8', () => {
-        console.log(magenta(`    TypeScript Sprite: ${destTSFile}`));
+        console.log(magenta(`    TypeScript Sprite: ${iconSet.tsSpriteFilePath}`));
 
         done();
       });
