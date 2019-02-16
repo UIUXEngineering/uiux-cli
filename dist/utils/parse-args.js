@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chalk_1 = require("chalk");
-var enums_1 = require("./enums");
-var gulpPaths_1 = require("./gulp/gulpPaths");
-var templateVars_1 = require("./template/templateVars");
 var path_1 = require("path");
-var stringUtils = require('ember-cli-string-utils');
 var processState = {
     canProcess: false,
     template: false,
@@ -97,10 +93,4 @@ function parseTemplateParams(argList) {
     // Template Variables
     // templateTypes enum
     args.template = opts[1].toUpperCase();
-    args.gulp = gulpPaths_1.gulpPaths(args, opts);
-    // GULP TASK
-    // GULP TASK
-    // GULP TASK
-    args.gulp.task = enums_1.gulpTasks.GENERATE;
-    args = templateVars_1.templateVars(args, opts);
 }

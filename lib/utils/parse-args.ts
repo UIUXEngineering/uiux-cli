@@ -1,10 +1,5 @@
 import { bold, red } from 'chalk';
-import { gulpTasks } from './enums';
-import { gulpPaths } from './gulp/gulpPaths';
-import { templateVars } from './template/templateVars';
 import { resolve } from 'path';
-
-const stringUtils = require('ember-cli-string-utils');
 
 export interface IProcessState {
   canProcess: boolean;
@@ -155,15 +150,6 @@ function parseTemplateParams(argList: string[]): void {
   // Template Variables
   // templateTypes enum
   args.template = opts[ 1 ].toUpperCase();
-
-  args.gulp = gulpPaths(args, opts);
-
-  // GULP TASK
-  // GULP TASK
-  // GULP TASK
-  args.gulp.task = gulpTasks.GENERATE;
-
-  args = templateVars(args, opts);
 
 }
 

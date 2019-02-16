@@ -5,7 +5,7 @@
       {
         "version": "v2",
         "outDir": "root/assets/svg",
-        "tsSpriteFilePath": "root/svg-sprite.ts",
+        "tsSpriteFilePath": "root/home-svg-sprite.ts",
         "setName": "home-icon-set",
         "pathFromHTML": "assets/svg",
         "nrwl": true,
