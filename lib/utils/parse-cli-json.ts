@@ -21,6 +21,7 @@ export interface Isvg {
   setName: string;
   version: string;
   outDir: string;
+  tsSpriteFilePath: string;
   pathFromHTML: string;
 }
 
@@ -47,7 +48,7 @@ export interface ICLITasks {
 let cliTasks: ICLITasks = {
   svg: [{
     relativeToProjectRoot: '',
-    tsReference: 'src/environment/svgAssets.ts',
+    tsReference: '',
     sets: [],
   }],
   copy: {

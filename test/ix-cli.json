@@ -5,29 +5,27 @@
       {
         "version": "v2",
         "outDir": "root/assets/svg",
+        "tsSpriteFilePath": "root/svg-sprite.ts",
         "setName": "home-icon-set",
         "pathFromHTML": "assets/svg",
         "nrwl": true,
         "srcFiles": {
-          "../design/icons/views/home": {
-            "ic_home_white_24px.svg": {
+          "../design/icons/home": {
+            "baseline-fiber_manual_record-24px.svg": {
               "id": "home"
             },
-            "ic_settings_white_24px.svg": {
+            "baseline-pause-24px.svg": {
               "id": "settings"
-            },
-            "ic_menu_white_24px.svg": {
-              "id": "menu"
             }
           },
-          "../design/icons/views/login": {
-            "1512-google.svg": {
+          "../design/icons/login": {
+            "baseline-stop-24px.svg": {
               "id": "google"
             },
-            "1520-facebook.svg": {
+            "spout.logo.svg": {
               "id": "facebook"
             },
-            "1526-twitter.svg": {
+            "spout-icon-24x24.svg": {
               "id": "twittler"
             }
           }
@@ -40,19 +38,19 @@
         "setName": "admin-icon-set",
         "pathFromHTML": "assets/svg",
         "srcFiles": {
-          "../design/icons/views/mixer": {
-            "ic_add_white_24px.svg": {
+          "../design/icons/mixer": {
+            "ic_mixer_menu_white_24px.svg": {
               "id": "add"
             },
-            "ic_album_white_24px.svg": {
+            "spout.logo.svg": {
               "id": "album"
             }
           },
-          "../design/icons/views/progressStepper": {
-            "ic_brightness_1_white_24px.svg": {
+          "../design/icons/progressStepper": {
+            "spout-logo-24x24.svg": {
               "id": "bright"
             },
-            "ic_radio_button_unchecked_white_24px.svg": {
+            "spout-logo-outlined-24h.svg": {
               "id": "radio"
             }
           }

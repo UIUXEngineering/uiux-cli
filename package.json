@@ -1,6 +1,6 @@
 {
   "name": "@uiux/cli",
-  "version": "6.0.5",
+  "version": "7.0.0",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
@@ -15,20 +15,21 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "ember-cli-string-utils": "^1.1.0",
-    "gulp": "^3.9.1",
-    "gulp-cheerio": "^0.6.2",
+    "gulp": "^4.0.0",
+    "gulp-cheerio": "^0.6.3",
     "gulp-data": "^1.2.1",
     "gulp-md-svgstore": "^6.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-template": "^4.0.0",
     "mkdirp": "^0.5.1",
     "rmfr": "^1.0.7",
-    "run-sequence": "^2.2.0"
+    "run-sequence": "^2.2.0",
+    "vinyl-fs": "^3.0.3"
   },
   "devDependencies": {
     "@types/chalk": "^0.4.31",
     "@types/gulp": "^4.0.4",
-    "@types/node": "^8.0.44",
+    "@types/node": "10.9.0",
     "tslib": "^1.8.0",
     "tslint": "^5.7.0",
     "tsutils": "^2.12.1",

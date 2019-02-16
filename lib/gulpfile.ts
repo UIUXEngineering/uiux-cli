@@ -29,7 +29,8 @@ if (state.canProcess) {
   process.chdir(args.gulp.cwd);
 
   const cliTasks: ICLITasks = parseCLIJson(args);
-  let filePath: string;
+  let tsReferencePath: string;
+  let tsSpritePath: string;
 
   if (state.template) {
 
@@ -67,23 +68,46 @@ if (state.canProcess) {
 
       content += '};\n';
 
-      filePath = join(svg.relativeToProjectRoot, svg.tsReference);
+      if (svg.tsReference && svg.tsReference.length) {
+        tsReferencePath = join(svg.relativeToProjectRoot, svg.tsReference);
 
-      mkdirp(dirname(filePath), function (err: any) {
-        if (err) {
-          console.error(err);
-        } else {
-          writeFile(filePath, content, (err: ErrnoException) => {
-            if (err) {
-              return console.log(err);
-            }
+        mkdirp(dirname(tsReferencePath), function ( err: any) {
+          if (err) {
+            console.error(err);
+          } else {
+            writeFile(tsReferencePath, content, ( err: ErrnoException) => {
+              if (err) {
+                return console.log(err);
+              }
 
-            console.log('\n');
-            console.log(yellow(`    reference: ${svg.tsReference}`));
-            console.log('\n');
-          });
-        }
-      });
+              console.log('\n');
+              console.log(yellow(`    reference: ${svg.tsReference}`));
+              console.log('\n');
+            });
+          }
+        });
+      }
+
+      if (svg.tsSprite && svg.tsSprite.length) {
+        tsSpritePath = join(svg.relativeToProjectRoot, svg.tsSprite);
+
+        mkdirp(dirname(tsSpritePath), function ( err: any) {
+          if (err) {
+            console.error(err);
+          } else {
+            writeFile(tsSpritePath, content, ( err: ErrnoException) => {
+              if (err) {
+                return console.log(err);
+              }
+
+              console.log('\n');
+              console.log(yellow(`    reference: ${svg.tsSprite}`));
+              console.log('\n');
+            });
+          }
+        });
+      }
+
     });
 
 

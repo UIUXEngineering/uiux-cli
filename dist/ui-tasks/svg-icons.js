@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chalk_1 = require("chalk");
+var fs_1 = require("fs");
 var gulp_1 = require("gulp");
+// import * as gulp from 'gulp';
 var path_1 = require("path");
+var gulpRunSequence = require('run-sequence');
 var gulpCheerio = require('gulp-cheerio');
 var gulpMdSvgstore = require('gulp-md-svgstore');
 var gulp = require('gulp');
@@ -35,8 +38,8 @@ function processIconSet(iconSet, cliTasks) {
                 }
             },
             parserOptions: {
-                xmlMode: true
-            }
+                xmlMode: true,
+            },
         }))
             .pipe(gulpMdSvgstore({
             // name of result svg
@@ -44,7 +47,7 @@ function processIconSet(iconSet, cliTasks) {
             // keep id's set in each file
             keepIds: true,
             // inlineSvg remove xmls meta
-            inlineSvg: true
+            inlineSvg: true,
         }))
             .pipe(gulp_1.dest(path_1.join(cliTasks.relativeToProjectRoot, iconSet.outDir)));
         stream.on('end', function () {
@@ -54,6 +57,33 @@ function processIconSet(iconSet, cliTasks) {
             done(error);
         });
     });
-    gulp.start('svg-icons');
+    gulp_1.task('ts-sprite', gulp_1.series('svg-icons', function (done) {
+        var sourceSVGFileName = iconSet.setName + '-' + iconSet.version + '.svg';
+        var sourcePath = path_1.join(cliTasks.relativeToProjectRoot, iconSet.outDir, sourceSVGFileName);
+        var destTSFile = path_1.join(cliTasks.relativeToProjectRoot, iconSet.tsSpriteFilePath);
+        fs_1.readFile(sourcePath, function (err, data) {
+            if (err) {
+                throw err;
+            }
+            var payload = '//tslint:disable \nexport const SVG_SPRITE: any = `' + data + '`;';
+            fs_1.writeFile(destTSFile, payload, 'utf8', function () {
+                done();
+            });
+        });
+    }));
+    if (iconSet.tsSpriteFilePath && iconSet.tsSpriteFilePath.length > 0) {
+        gulp_1.task('ts-sprite')(function (err) {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
+    else {
+        gulp_1.task('svg-icons')(function (err) {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
 }
 exports.processIconSet = processIconSet;

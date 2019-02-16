@@ -25,7 +25,8 @@ if (state.canProcess) {
      */
     process.chdir(args.gulp.cwd);
     var cliTasks = parse_cli_json_1.parseCLIJson(args);
-    var filePath_1;
+    var tsReferencePath_1;
+    var tsSpritePath_1;
     if (state.template) {
         gulp.start(args.gulp.task);
     }
@@ -48,22 +49,42 @@ if (state.canProcess) {
                 svg_icons_1.processIconSet(JSON.parse(JSON.stringify(svgSet)), svg);
             });
             content += '};\n';
-            filePath_1 = path_1.join(svg.relativeToProjectRoot, svg.tsReference);
-            mkdirp(path_1.dirname(filePath_1), function (err) {
-                if (err) {
-                    console.error(err);
-                }
-                else {
-                    fs_1.writeFile(filePath_1, content, function (err) {
-                        if (err) {
-                            return console.log(err);
-                        }
-                        console.log('\n');
-                        console.log(chalk_1.yellow("    reference: " + svg.tsReference));
-                        console.log('\n');
-                    });
-                }
-            });
+            if (svg.tsReference && svg.tsReference.length) {
+                tsReferencePath_1 = path_1.join(svg.relativeToProjectRoot, svg.tsReference);
+                mkdirp(path_1.dirname(tsReferencePath_1), function (err) {
+                    if (err) {
+                        console.error(err);
+                    }
+                    else {
+                        fs_1.writeFile(tsReferencePath_1, content, function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                            console.log('\n');
+                            console.log(chalk_1.yellow("    reference: " + svg.tsReference));
+                            console.log('\n');
+                        });
+                    }
+                });
+            }
+            if (svg.tsSprite && svg.tsSprite.length) {
+                tsSpritePath_1 = path_1.join(svg.relativeToProjectRoot, svg.tsSprite);
+                mkdirp(path_1.dirname(tsSpritePath_1), function (err) {
+                    if (err) {
+                        console.error(err);
+                    }
+                    else {
+                        fs_1.writeFile(tsSpritePath_1, content, function (err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                            console.log('\n');
+                            console.log(chalk_1.yellow("    reference: " + svg.tsSprite));
+                            console.log('\n');
+                        });
+                    }
+                });
+            }
         });
     }
 }

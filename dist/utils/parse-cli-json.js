@@ -9,7 +9,7 @@ var processState = {
 var cliTasks = {
     svg: [{
             relativeToProjectRoot: '',
-            tsReference: 'src/environment/svgAssets.ts',
+            tsReference: '',
             sets: [],
         }],
     copy: {
