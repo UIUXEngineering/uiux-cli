@@ -1,6 +1,6 @@
 {
   "svg": [{
-    "tsReference": "root/svgIconAssets.ts",
+    "tsReferenceFilePath": "root/svgIconAssets.ts",
     "sets": [
       {
         "version": "v2",
