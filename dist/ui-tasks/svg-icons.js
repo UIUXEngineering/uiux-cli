@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var chalk_1 = require("chalk");
 var fs_1 = require("fs");
 var gulp_1 = require("gulp");
-// import * as gulp from 'gulp';
 var path_1 = require("path");
 var gulpCheerio = require('gulp-cheerio');
 var gulpMdSvgstore = require('gulp-md-svgstore');
@@ -74,7 +73,7 @@ function processIconSet(iconSet, cliTasks) {
             }
             var payload = '//tslint:disable \nexport const SVG_SPRITE: any = `' + data + '`;';
             fs_1.writeFile(destTSFile, payload, 'utf8', function () {
-                console.log(chalk_1.magenta("    TypeScript Sprite: " + iconSet.tsSpriteFilePath));
+                console.log(chalk_1.magenta("    TypeScript Sprite: " + path_1.relative(process.cwd(), iconSet.tsSpriteFilePath)));
                 done();
             });
         });

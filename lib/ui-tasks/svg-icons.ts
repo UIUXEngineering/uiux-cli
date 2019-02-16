@@ -1,8 +1,7 @@
 import { green, magenta, yellow, red } from 'chalk';
 import { existsSync, readFile, writeFile } from 'fs';
 import { dest, series, src, task } from 'gulp';
-// import * as gulp from 'gulp';
-import { join, normalize } from 'path';
+import { join, normalize, relative } from 'path';
 import { Isvg } from '../utils/parse-cli-json';
 
 const gulpCheerio = require('gulp-cheerio');
@@ -96,7 +95,7 @@ export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
 
       const payload = '//tslint:disable \nexport const SVG_SPRITE: any = `' + data + '`;';
       writeFile(destTSFile, payload, 'utf8', () => {
-        console.log(magenta(`    TypeScript Sprite: ${iconSet.tsSpriteFilePath}`));
+        console.log(magenta(`    TypeScript Sprite: ${relative(process.cwd(), iconSet.tsSpriteFilePath)}`));
 
         done();
       });
