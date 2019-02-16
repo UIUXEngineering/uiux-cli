@@ -5,10 +5,8 @@ var fs_1 = require("fs");
 var gulp_1 = require("gulp");
 // import * as gulp from 'gulp';
 var path_1 = require("path");
-var gulpRunSequence = require('run-sequence');
 var gulpCheerio = require('gulp-cheerio');
 var gulpMdSvgstore = require('gulp-md-svgstore');
-var gulp = require('gulp');
 function processIconSet(iconSet, cliTasks) {
     console.log('\n');
     console.log(chalk_1.yellow("    set: " + (path_1.join(iconSet.outDir, iconSet.setName) + "-" + iconSet.version + ".svg")));

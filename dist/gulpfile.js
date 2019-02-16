@@ -49,8 +49,8 @@ if (state.canProcess) {
                 svg_icons_1.processIconSet(JSON.parse(JSON.stringify(svgSet)), svg);
             });
             content += '};\n';
-            if (svg.tsReference && svg.tsReference.length) {
-                tsReferencePath_1 = path_1.join(svg.relativeToProjectRoot, svg.tsReference);
+            if (svg.tsReferenceFilePath && svg.tsReferenceFilePath.length) {
+                tsReferencePath_1 = path_1.join(svg.relativeToProjectRoot, svg.tsReferenceFilePath);
                 mkdirp(path_1.dirname(tsReferencePath_1), function (err) {
                     if (err) {
                         console.error(err);
@@ -61,7 +61,7 @@ if (state.canProcess) {
                                 return console.log(err);
                             }
                             console.log('\n');
-                            console.log(chalk_1.yellow("    reference: " + svg.tsReference));
+                            console.log(chalk_1.yellow("    reference: " + svg.tsReferenceFilePath));
                             console.log('\n');
                         });
                     }

@@ -2,24 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = require("path");
 var constants_1 = require("../constants");
-var stringUtils = require('ember-cli-string-utils');
-var processState = {
-    canProcess: false,
-};
 var cliTasks = {
     svg: [{
             relativeToProjectRoot: '',
-            tsReference: '',
+            tsReferenceFilePath: '',
             sets: [],
         }],
     copy: {
         sets: [],
     }
 };
-function getCliTasks() {
-    return cliTasks;
-}
-exports.getCliTasks = getCliTasks;
 function parseCLIJson(args) {
     var destProjectRootPath = path_1.relative(args.gulp.cwd, args.processCwd) || '';
     var relativeToProjectRoot = path_1.relative(path_1.resolve(__dirname, '../', '../'), destProjectRootPath);
@@ -30,7 +22,7 @@ function parseCLIJson(args) {
             svgConfig.sets.forEach(function (_config) {
                 cliTasks.svg[index].sets.push(_config);
                 cliTasks.svg[index].relativeToProjectRoot = relativeToProjectRoot;
-                cliTasks.svg[index].tsReference = svgConfigs_1[index].tsReference;
+                cliTasks.svg[index].tsReferenceFilePath = svgConfigs_1[index].tsReferenceFilePath;
             });
         });
     }

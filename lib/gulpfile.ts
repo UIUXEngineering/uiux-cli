@@ -68,8 +68,8 @@ if (state.canProcess) {
 
       content += '};\n';
 
-      if (svg.tsReference && svg.tsReference.length) {
-        tsReferencePath = join(svg.relativeToProjectRoot, svg.tsReference);
+      if (svg.tsReferenceFilePath && svg.tsReferenceFilePath.length) {
+        tsReferencePath = join(svg.relativeToProjectRoot, svg.tsReferenceFilePath);
 
         mkdirp(dirname(tsReferencePath), function ( err: any) {
           if (err) {
@@ -81,7 +81,7 @@ if (state.canProcess) {
               }
 
               console.log('\n');
-              console.log(yellow(`    reference: ${svg.tsReference}`));
+              console.log(yellow(`    reference: ${svg.tsReferenceFilePath}`));
               console.log('\n');
             });
           }

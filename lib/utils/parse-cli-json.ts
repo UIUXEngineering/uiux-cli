@@ -2,16 +2,6 @@ import { join, relative, resolve } from 'path';
 import { IArgs } from './parse-args';
 import { CONSTANSTS } from '../constants';
 
-const stringUtils = require('ember-cli-string-utils');
-
-export interface IProcessState {
-  canProcess: boolean;
-}
-
-let processState = {
-  canProcess: false,
-};
-
 export interface Isvg {
   srcDir: string;
   gulpSrc: string[];
@@ -37,7 +27,7 @@ export interface ICLITasks {
 
   svg: {
     relativeToProjectRoot: string;
-    tsReference: string;
+    tsReferenceFilePath: string;
     sets: Isvg[]
   }[];
   copy: {
@@ -48,17 +38,13 @@ export interface ICLITasks {
 let cliTasks: ICLITasks = {
   svg: [{
     relativeToProjectRoot: '',
-    tsReference: '',
+    tsReferenceFilePath: '',
     sets: [],
   }],
   copy: {
     sets: [],
   }
 };
-
-export function getCliTasks(): ICLITasks {
-  return cliTasks;
-}
 
 export function parseCLIJson(args: IArgs): ICLITasks {
 
@@ -76,7 +62,7 @@ export function parseCLIJson(args: IArgs): ICLITasks {
       svgConfig.sets.forEach((_config: Isvg) => {
         cliTasks.svg[index].sets.push(_config);
         cliTasks.svg[index].relativeToProjectRoot = relativeToProjectRoot;
-        cliTasks.svg[index].tsReference = svgConfigs[index].tsReference;
+        cliTasks.svg[index].tsReferenceFilePath = svgConfigs[index].tsReferenceFilePath;
       });
     });
   }

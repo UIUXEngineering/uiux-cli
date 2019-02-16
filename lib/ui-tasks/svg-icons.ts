@@ -4,12 +4,9 @@ import { dest, src, task, series } from 'gulp';
 // import * as gulp from 'gulp';
 import { join, normalize } from 'path';
 import { Isvg } from '../utils/parse-cli-json';
-import { sequenceTask } from '../utils/sequence-task';
-const gulpRunSequence = require('run-sequence');
 
 const gulpCheerio = require('gulp-cheerio');
 const gulpMdSvgstore = require('gulp-md-svgstore');
-let gulp = require('gulp');
 
 export function processIconSet( iconSet: Isvg, cliTasks: any ): void {
   console.log('\n');
