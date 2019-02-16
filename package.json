@@ -1,6 +1,6 @@
 {
   "name": "@uiux/cli",
-  "version": "7.0.3",
+  "version": "7.2.0",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
@@ -18,7 +18,7 @@
     "gulp": "^4.0.0",
     "gulp-cheerio": "^0.6.3",
     "gulp-data": "^1.2.1",
-    "gulp-md-svgstore": "^6.1.0",
+    "gulp-md-svgstore": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "mkdirp": "^0.5.1",
     "rmfr": "^1.0.7"
