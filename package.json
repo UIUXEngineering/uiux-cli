@@ -1,6 +1,6 @@
 {
   "name": "@uiux/cli",
-  "version": "7.2.3",
+  "version": "8.0.0",
   "description": "UIUX CLI",
   "main": "index.js",
   "bin": {
@@ -13,9 +13,11 @@
     "build": "node_modules/.bin/tsc --watch"
   },
   "dependencies": {
-    "chalk": "^2.1.0",
+    "chalk": "^4.0.0",
+    "chokidar": "^3.4.0",
     "ember-cli-string-utils": "^1.1.0",
-    "gulp": "^4.0.0",
+    "fsevents": "^2.1.3",
+    "gulp": "^4.0.2",
     "gulp-cheerio": "^0.6.3",
     "gulp-data": "^1.2.1",
     "gulp-md-svgstore": "^7.0.0",
@@ -24,12 +26,11 @@
     "rmfr": "^1.0.7"
   },
   "devDependencies": {
-    "@types/chalk": "^0.4.31",
-    "@types/gulp": "^4.0.4",
-    "@types/node": "10.9.0",
-    "tslib": "^1.8.0",
-    "tslint": "^5.7.0",
-    "tsutils": "^2.12.1",
-    "typescript": "^2.5.3"
+    "@types/gulp": "^4.0.6",
+    "@types/node": "13.13.5",
+    "tslib": "^1.11.2",
+    "tslint": "^6.1.2",
+    "tsutils": "^3.17.1",
+    "typescript": "^3.8.3"
   }
 }
