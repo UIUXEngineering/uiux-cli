@@ -10,6 +10,7 @@
   "author": "Jerry Orta <jerryorta.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "ci": "rm -rf node_modules && yarn install --frozen-lockfile",
     "build": "node_modules/.bin/tsc --watch"
   },
   "dependencies": {
